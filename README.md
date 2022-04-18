@@ -236,8 +236,8 @@ msgbox, % json.Dump(rect)
 ; sometime we only want to playwith x or y 
 Session.x := 30
 msgbox, % session.y
-; this also return whole rect as well ; not just hight and also 
-k := Session.hight := A_ScreenHeight - (A_ScreenHeight * 5 / 100)
+; this also return whole rect as well ; not just height and also 
+k := Session.height := A_ScreenHeight - (A_ScreenHeight * 5 / 100)
 if !k.error
 	msgbox, json.dump(k)
 
