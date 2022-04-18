@@ -1,6 +1,6 @@
 
 ![alt text](https://i.ibb.co/HBPZ9Nd/Rufaydium.jpg)
-## Rufaydium
+# Rufaydium
 Rufaydium is Webdriver Library for Autohotket, can support any chromium based browser and only requires Latest WebDriver,
 
 i.e. for Chrome 100 you need to download ChromeDriver 100.0.4896.60
@@ -107,7 +107,7 @@ class capabilities
 	static ChromeSimple := {"capabilities":{"alwaysMatch":{"browserName":"chrome"}}}
 }
 ```
-# Script reloading
+## Script reloading
 we can reload script as many time as we want but driver will be active in process so we can have control over all the session created through Webdriver so far and we can also Close Driver process this will cause issue that we can no longer access any session created through WebDriver which have been recently closed
 ```AutoHotkey
 ChromeDriver := A_ScriptDir "\chromedriver.exe"
@@ -171,7 +171,7 @@ msgbox, % Session.FramesLength() ; this will return Frame quantity which is Zero
 ```
 Switching frame would also Switch CDP of that Frame
 
-# Error Handling
+## Error Handling
 ```AutoHotkey
 ; error Handling works with all methods, except methods that return Element pointer 
 response :=  Session.method()
@@ -200,7 +200,7 @@ Session.findelement(by.selector,"selectorparameter")
 Session.findelements(by.selector,"selectorparameter") 
 ; you can see by class
 ```
-# by Class
+## by Class
 ```AutoHotkey
 Class by
 {
@@ -211,7 +211,7 @@ Class by
 	static XPath	:= "xpath"
 }
 ```
-# Accessing Tables
+## Accessing Tables
 There are many ways to acess table you can use Java Script function to extract Session.ExecuteSync(JS) or Session.CDP.Evaluate(JS)
 but easy and simple ways is to utiliz AHK for loops
 ```AutoHotkey
@@ -225,7 +225,7 @@ for i, row in Table.QuerySelectorAll("tr")
   }
 }
 ```
-# Session window position and location
+## Session window position and location
 ```AutoHotkey
 ; Getting window position and location
 sessionrect := Session.Getrect()
@@ -263,12 +263,12 @@ Session.Alert("accept") ; pressing OK / accept pop up msg
 Session.Alert("dismiss") ; pressing cancel / dismiss pop up msg
 Session.Alert("Send","some text")  ; sending a Alert / pop up msg 
 ```
-# Tacking Screen Shots accept only png file format
+## Tacking Screen Shots accept only png file format
 ```AutoHotkey
 Session.Screenshot("picture loaction") ; will save PNG to loaction
 Element.Screenshot("picture loaction") ; will save PNG to loaction
 ```
-# PDF printing 
+## PDF printing 
 its supported only for headless mode according to web driver 
 ```AutoHotkey
 Session.print(PDFlocation,PrintOptions.A4_Default) ; see Class PrintOptions
@@ -300,7 +300,7 @@ Class PrintOptions ; https://www.w3.org/TR/webdriver2/#print
 	)
 }
 ```
-# Session inputs events
+## Session inputs events
 ```AutoHotkey
 Session.move(x,y) move mouse pointer to location
 Session.click(1) ; sending click on moved loaction ; [button: 1(left) | 2(middle) | 3(right)]
@@ -309,7 +309,7 @@ Session.MBDown(1) ; sending mouse click down on moved loaction ; [button: 1(left
 Session.MBup(1) ; sending mouse click up on moved loaction ; [button: 1(left) | 2(middle) | 3(right)]
 ; now you can understand how to drag and drop stuff  read about element location rect and size further down below 
 ```
-# Session Cookies
+## Session Cookies
 ```AutoHotkey
 Session.GetCookies() ; return with object array of cookies you need to parse then and understand 
 Session.GetCookieName(Name) ; return with cookie with Name haven't tested it 
@@ -355,7 +355,7 @@ Element.Shadow() ; return with shadow element detail actually I going to add fun
 
 Element.Uploadfile(filelocation) ; this not working right I am working on it issue need to find out Payload/request parameters 
 ```
-# Key.Class
+## Key.Class
 ```AutoHotkey
 Class Key
 {
