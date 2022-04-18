@@ -269,7 +269,7 @@ its supported only for headless mode according to web driver
 Session.print(PDFlocation,PrintOptions.A4_Default) ; see Class PrintOptions
 Session.print(PDFlocation,{"":""}) ; for default print options
 ```
-Class PrintOptions
+## Class PrintOptions
 PrintOptions to make custom PrintOptions
 ```AutoHotkey
 Class PrintOptions ; https://www.w3.org/TR/webdriver2/#print
