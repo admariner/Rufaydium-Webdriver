@@ -9,10 +9,7 @@ It utilizes Rest Api from W3C https://www.w3.org/TR/webdriver2/
 Rufadium also supports Chrome Devtools Protocols same as chrome.ahk
 
 ## Note: 
-No need to install / setup selenium, Rufaydium is AHK's Selenium,
-even Selenium 4 have not been implement with latest W3C Webdriver methods for many languages,
-I am not user of Selenium therefore, I am not sure if Rufaydium has more functionality compare to selenium
-but I am sure Rufaydium is more flexible than selenium
+No need to install / setup selenium, Rufaydium is AHK's Selenium and is more flexible than selenium
 
 ## How to use
 ```AutoHotkey
