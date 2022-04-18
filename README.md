@@ -215,7 +215,7 @@ Table := Session.QuerySelectorAll("table")[1]
 for i, row in Table.QuerySelectorAll("tr")
 {
   msgbox, % "Row number " i "has text: " row.innerText
-  for c, td in row
+  for c, td in row.QuerySelectorAll("td")
   {
     msgbox, % "Row " i " Column: " c " has text: " td.innerText
   }
