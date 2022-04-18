@@ -131,7 +131,9 @@ Page1.exit() ; will close all windows / tabs will end up closing whole session
 We Switch Tabs using `Session.SwitchbyTitle(Title)` or `Seesion.SwitchbyURL(url="")`
 but Session remain the same If you check out examples I posted you would easly understand how switching Tab works
 Just like Switch Tabs one can Switch Frames as well and pointer session will remain same.
+
 ![alt text](https://i.ibb.co/PW2P9ZG/Rufaydium-Frames-Example.png)
+
 According to above image we have 1 session having three tabs
 Example for TAB 1
 ```AutoHotkey
