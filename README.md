@@ -1,4 +1,3 @@
-
 ![alt text](https://i.ibb.co/HBPZ9Nd/Rufaydium.jpg)
 # Rufaydium
 Rufaydium is Webdriver Library for Autohotkey, can support any chromium based browser and only requires Latest WebDriver,
@@ -18,7 +17,7 @@ but I am sure Rufaydium is more flexible than selenium
 ## How to use
 ```AutoHotkey
 #Include Rufaydium.ahk
-; Just need Webdriver Executable llocation 
+; Just need Webdriver Executable location 
 ChromeDriver := A_ScriptDir "\chromedriver.exe"
 ; choose different driver in order to automate different Browser
 Driver := new RunDriver(ChromeDriver) ; running driver
@@ -128,7 +127,7 @@ Page1.exit() ; will close all windows / tabs will end up closing whole session
 ```
 # Switching Between Window Tabs & Frame
 We Switch Tabs using `Session.SwitchbyTitle(Title)` or `Seesion.SwitchbyURL(url="")`
-but Session remain the same If you check out examples I posted you would easly understand how switching Tab works
+but Session remain the same If you check out examples I posted you would easily understand how switching Tab works
 Just like Switch Tabs one can Switch Frames as well and pointer session will remain same.
 
 ![alt text](https://i.ibb.co/PW2P9ZG/Rufaydium-Frames-Example.png)
@@ -302,10 +301,10 @@ Class PrintOptions ; https://www.w3.org/TR/webdriver2/#print
 ## Session inputs events
 ```AutoHotkey
 Session.move(x,y) move mouse pointer to location
-Session.click(1) ; sending click on moved loaction ; [button: 1(left) | 2(middle) | 3(right)]
-Session.DoubleClick(1) ; sending double click on moved loaction ; [button: 1(left) | 2(middle) | 3(right)]
-Session.MBDown(1) ; sending mouse click down on moved loaction ; [button: 1(left) | 2(middle) | 3(right)]
-Session.MBup(1) ; sending mouse click up on moved loaction ; [button: 1(left) | 2(middle) | 3(right)]
+Session.click(1) ; sending click on moved location ; [button: 1(left) | 2(middle) | 3(right)]
+Session.DoubleClick(1) ; sending double click on moved location ; [button: 1(left) | 2(middle) | 3(right)]
+Session.MBDown(1) ; sending mouse click down on moved location ; [button: 1(left) | 2(middle) | 3(right)]
+Session.MBup(1) ; sending mouse click up on moved location ; [button: 1(left) | 2(middle) | 3(right)]
 ; now you can understand how to drag and drop stuff  read about element location rect and size further down below 
 ```
 ## Session Cookies
@@ -322,9 +321,9 @@ Element.Rect() ; will return position and size
 Element.Size() ; will return Size
 Element.Location() ; will return position
 Element.LocationInView() ; will return position in view
-Element.enabled() ; will return boolean true for enabled or false disabled 
-Element.Selected() ; will return boolean true for Selected or false not selected this will come handy for dropdown lists or combo list selecting options
-Element.Displayed() ; will return boolean true for visible element / false for invisible element
+Element.enabled() ; will return Boolean true for enabled or false disabled 
+Element.Selected() ; will return Boolean true for Selected or false not selected this will come handy for dropdown lists or combo list selecting options
+Element.Displayed() ; will return Boolean true for visible element / false for invisible element
 
 ; inputs and event triggers 
 Element.Submut() ; this will trigger existing event(s)
@@ -339,13 +338,13 @@ msgbox, % Element.value
 ;setting value 
 Element.value := "somevalue"
 
-Element.InnerText ; return with innerTExt 
+Element.InnerText ; return with innerText 
 ; you cannot set innerText using this approach you will need Session.CDP approach , CDP can modify whole DOM 
-; if element is innerText based editbox we can simply use Element.sendkey()
+; if element is innerText based edit box we can simply use Element.sendkey()
 
 ; Attribs properties & CSS
 Element.GetAttribute(Name) ; return with required attribute
-Element.GetProperty(Name) ; return with required prorty
+Element.GetProperty(Name) ; return with required Property
 Element.GetCSS(Name) ; return with CSS
 
 ; element SHadow
@@ -399,4 +398,3 @@ Class Key
 	static ZenkakuHankaku:= "\uE040"	
 }
 ```
-
