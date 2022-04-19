@@ -36,6 +36,19 @@ Class RunDriver
 		Process, Wait, % PID
 		this.PID := PID
 	}
+	
+	help(Location)
+	{
+		Run % comspec " /k " chr(34) Location chr(34) " --help > dir.txt",,Hide,PID
+		while !FileExist(A_ScriptDir "\dir.txt")
+			sleep, 200
+		sleep, 200
+		FileRead, Content, dir.txt
+		while FileExist(A_ScriptDir "\dir.txt")
+			FileDelete, % A_ScriptDir "\dir.txt"
+		Process, Close, % PID
+		return Content
+	}
 }
 
 /*
