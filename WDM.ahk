@@ -1,5 +1,5 @@
-; WDM aka Web Driver managment Class for Rufaydium.ahk 
-; I am upto/will add support update auto download supporting Webdriver when broswer gets update
+; WDM aka Web Driver management Class for Rufaydium.ahk 
+; I am upto/will add support update auto download supporting Webdriver when browser gets update
 ; By Xeo786
 
 Class RunDriver
@@ -52,7 +52,7 @@ Class RunDriver
 }
 
 /*
- Rufaydium is totally depands on Rest Api (HTTP) calls and 
+ Rufaydium totally depends on Rest API (HTTP) calls and 
  I would have created so many Winhttp com objects
  therefore I came up with this trick
  Single function per single process

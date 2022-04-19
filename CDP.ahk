@@ -1,4 +1,4 @@
-; CDP.ahk provides acces to Devtools over WebDriver that support Chrome DevTools
+; CDP.ahk provides access to Devtools over WebDriver that support Chrome DevTools
 ; CDP.Ahk is exactly Chrome DOM.ahk >> https://www.autohotkey.com/boards/viewtopic.php?t=94276&p=418181 
 ; by Xeo786
 
@@ -19,11 +19,11 @@ class CDP extends Rufaydium
 	Call(DomainAndMethod, Params:="") ;https://stackoverflow.com/questions/70654898/selenium-4-x-trying-to-post-cdp-unsupportedcommandexception
 	{
 		Payload := { "params": Params ? Params : {"":""}, "cmd": DomainAndMethod}
-		resnponse := this.Send("goog/cdp/execute"
+		response := this.Send("goog/cdp/execute"
 		,"POST"
 		,Payload
 		,1)
-		return resnponse
+		return response
 	}
 	
 	Evaluate(JS)
@@ -83,7 +83,7 @@ class CDP extends Rufaydium
 		return New CDPElement(nodeId,this.address)
 	}
 	
-	getelementbyid(ID)
+	getElementByID(ID)
 	{
 		ID := "#" ID
 		nodeId := this.call("DOM.querySelector",{"nodeId":this.nodeId,"selector":ID}).nodeId
@@ -174,7 +174,7 @@ class CDP extends Rufaydium
 	}
 	
 	getBoxModel()
-	{ ;this return with model having Hight and wieghts and  x y coord of Margin padding and border
+	{ ;this return with model having Height and widths and  x y coordinates of Margin padding and border
 		return this.call("DOM.getBoxModel",{"nodeId":this.nodeId}).model
 	}
 	
@@ -183,8 +183,8 @@ class CDP extends Rufaydium
 		return this.call("DOM.getContentQuads",{"nodeId":this.nodeId}).quads[1]
 	}
 	
-	; this simply highlight boreders of element but 
-	; its slow coz highlight element by location and extracting loctaion feels little slow
+	; this simply highlight borders of element but 
+	; its slow because highlight element by location and extracting location feels little slow
 	highlightRect(r:=255,g:=0,b:=0,a:=1)
 	{
 		Model := this.getBoxModel()
@@ -201,7 +201,7 @@ class CDP extends Rufaydium
 	}
 	
 	; highlight node Configurations:  
-	; will be saved into the Element and will be triggerred using element.highlight()
+	; will be saved into the Element and will be triggered using element.highlight()
 	; Type = Solid or Grid
 	; Subtype for Solid are "contentColor","paddingColor","borderColor","marginColor","eventTargetColor","shapeColor","shapeMarginColor","cssGridColor"
 	; Subtype for Grid are "gridBorderColor","cellBorderColor","rowLineColor","columnLineColor"
@@ -250,7 +250,7 @@ class CDP extends Rufaydium
 		}
 	}
 	
-	; setting up grid parameters ture
+	; setting up grid parameters true
 	GridSet(Param)
 	{
 		L := ["showGridExtensionLines"
@@ -281,7 +281,7 @@ class CDP extends Rufaydium
 		;highlightConfig["contrastAlgorithm"] := "apca"
 		if !this.highlightConfig
 		{
-			msgbox, Please Set Highlight C0nfigutaion`nusing Element.highlightConfigurations()
+			msgbox, Please Set Highlight Configuration`nusing Element.highlightConfigurations()
 			return
 		}
 		
@@ -347,11 +347,11 @@ class CDP extends Rufaydium
 		return Value
 	}
 	
-	;;;;;;;;;;;; evenets 
+	;;;;;;;;;;;; events 
 	; Str is string 
 	; type Allowed Values: keyDown, keyUp, rawKeyDown but...
 	; for text parameter is KeyDownRaw and KeyUp are not required
-	; in simple type KeyDownRaw and KeyUp are forbiddne 
+	; in simple type KeyDownRaw and KeyUp are forbidden 
 	SendKey(str,type:="keyDown")
 	{
 		this.focus()
