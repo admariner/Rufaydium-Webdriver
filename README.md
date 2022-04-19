@@ -61,13 +61,13 @@ Options
 */
 ```
 ## Script reloading
-we can reload script as many time as we want but driver will be active in process so we can have control over all the session created through Webdriver so far and we can also Close Driver process this will cause issue that we can no longer access any session created through WebDriver which have been recently closed
+we can reload script as many time as we want but driver will be active in process so we can have control over all the session created through Webdriver so far and we can also Close Driver process this will cause issue that we can no longer access any session created through WebDriver. its better to Session.exit() then Driver.Exit()
 ```AutoHotkey
 ChromeDriver := A_ScriptDir "\chromedriver.exe"
 Driver := new RunDriver(ChromeDriver)
 Driver.Exit() ; use this when you finished using Rufaydium class
 ```
-## loading driver into Rufaydium
+## Loading driver into Rufaydium
 ```AutoHotkey
 Driver := new RunDriver(chromeDriver.exe)
 Chrome := new Rufaydium(Driver) ; this will load driver and return control over browser
@@ -170,8 +170,8 @@ We can load required Capabilities by doing,
 Chrome.capabilities := Capabilities.ChromeDefault
 ```
 # Create Session
-we can skip capabilities, as session will load `Capabilities.simple` as default Capabilities which should work with any browser
-after Setting up capabilities we can create session
+we can skip capabilities, as session will load `Capabilities.simple` as default Capabilities which should work with any browser.
+we can create session after Setting up capabilities 
 ```AutoHotkey
 Session := Chrome.NewSession()
 ```
@@ -189,7 +189,7 @@ Chrome := new Rufaydium(Driver)
 Page1 := Chrome.NewSession()
 Page1.Navigate("https://www.google.com/")
 Page1.NewTab() 	; create new window / tab but Page1 session pointer will remain same 
-Page1.Navigate("https://www.autohotkey.com/boards/viewtopic.php?t=94276") ; now 2nd tab is out active tab
+Page1.Navigate("https://www.autohotkey.com/boards/viewtopic.php?t=94276") ; navigating 2nd tab
 ; Page1.close() ; will close the active window / tab
 Page1.exit() ; will close all windows / tabs will end up closing whole session 
 ```
@@ -464,5 +464,32 @@ Class Key
 	static F12:= "\uE03C"
 	static Meta:= "\uE03D"
 	static ZenkakuHankaku:= "\uE040"	
+}
+```
+
+# Await
+Rufaydium Basic will wait for any task/change to get completed, and then execute next line 
+but task exceuted through CDP `Session.CDP` would wait, therefore we need to use `Session.CDP.WaitForLoad()`
+
+Waiting of webpage is based of document ready state https://www.w3schools.com/jsref/prop_doc_readystate.asp
+but there are webpages they keep loading and unload elements and stuff while their ready state remain `complete` 
+Rifaydium Basic and Rufaydium CDP would simply through error if element in question is not available 
+
+we can use few tricks to make Autohotkey wait, 
+for example We have click button and this would load element having innerText `User Form`
+```autohotkey
+Session.QuerySelector("button"),click()
+
+while !isobject(Userform) ; 
+{
+   sleep, 200
+   ; getting element do not support error handling for now but they do return with element object if found and empty when find nothing
+   Userform := Session.QuerySelector(".User-Form") 
+}
+
+h := Userform.innerText ; but element.methods support error handling
+while !h.error
+{
+    sleep, 200
 }
 ```
