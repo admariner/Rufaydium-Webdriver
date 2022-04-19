@@ -282,8 +282,8 @@ Class by
 }
 ```
 ## Accessing Tables
-There are many ways to acess table you can use Java Script function to extract Session.ExecuteSync(JS) or Session.CDP.Evaluate(JS)
-but easy and simple ways is to utiliz AHK for loops
+There are many ways to acess table you can use Java Script function to extract `Session.ExecuteSync(JS)` or Session.CDP.Evaluate(JS)
+but easy and simple ways is to utiliz AHK for loops, 
 ```AutoHotkey
 Table := Session.QuerySelectorAll("table")[1]
 for i, row in Table.QuerySelectorAll("tr")
@@ -295,6 +295,20 @@ for i, row in Table.QuerySelectorAll("tr")
   }
 }
 ```
+looping though whole table is little bid slow because one Rufaydium step consist on 3 steps
+1)`Json.Dump()` 2)`WinHTTP Request` 3)`Json.load()` and lopping through tables takes lots of steps its better to use `Session.ExecuteSync(JS)` to read huge table 
+but we can do make it much faster if we just wanat to eatrct table data and do not have to interact with table 
+```AutoHotkey
+Table := Session.QuerySelectorAll("table")[1].innerText ; reading thousand rows lighting fast
+for r, row in StrSplit(Table,"`n")
+{
+	for c, cell in StrSplit(row,"`t")
+	{
+		msgbox, % "Row: " r " Col:" C "`nText:" cell
+	}
+}
+```
+
 ## Session window position and location
 ```AutoHotkey
 ; Getting window position and location
