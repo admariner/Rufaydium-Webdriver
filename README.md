@@ -300,13 +300,16 @@ looping though whole table is little bid slow because one Rufaydium step consist
 but we can do make it much faster if we just wanat to eatrct table data and do not have to interact with table 
 ```AutoHotkey
 Table := Session.QuerySelectorAll("table")[1].innerText ; reading thousand rows lighting fast
+Tablearray := []
 for r, row in StrSplit(Table,"`n")
 {
 	for c, cell in StrSplit(row,"`t")
 	{
-		msgbox, % "Row: " r " Col:" C "`nText:" cell
+		;msgbox, % "Row: " r " Col:" C "`nText:" cell
+		Tablearray[r,c] := cell
 	}
 }
+msgbox, % Tablearray[1,5]
 ```
 
 ## Session window position and location
