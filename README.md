@@ -34,6 +34,7 @@ return
 Rundriver launches driver in background where port 9515 set to default 
 ```AutoHotkey
 Driver := new RunDriver(Driverexelocation,Port,Parameters)
+;Driver2 := new RunDriver(firefoxDriver.exe,9516) ; we can load multiple differnt drivers 
 ```
 parameters are webdriver.exe CMD arguments option can vary according to different drivers
 and we can also check these arguments
@@ -58,6 +59,18 @@ Options
   --allowed-ips=LIST              comma-separated allowlist of remote IP addresses which are allowed to connect to ChromeDriver
   --allowed-origins=LIST          comma-separated allowlist of request origins which are allowed to connect to ChromeDriver. Using `*` to allow any host origin is dangerous!
 */
+```
+## Script reloading
+we can reload script as many time as we want but driver will be active in process so we can have control over all the session created through Webdriver so far and we can also Close Driver process this will cause issue that we can no longer access any session created through WebDriver which have been recently closed
+```AutoHotkey
+ChromeDriver := A_ScriptDir "\chromedriver.exe"
+Driver := new RunDriver(ChromeDriver)
+Driver.Exit() ; use this when you finished using Rufaydium class
+```
+## loading driver into Rufaydium
+```AutoHotkey
+Driver := new RunDriver(chromeDriver.exe)
+Chrome := new Rufaydium(Driver) ; this will load driver and return control over browser
 ```
 
 # Capabilities Class
@@ -152,12 +165,20 @@ class capabilities
 	static ChromeSimple := {"capabilities":{"alwaysMatch":{"browserName":"chrome"}}}
 }
 ```
-## Script reloading
-we can reload script as many time as we want but driver will be active in process so we can have control over all the session created through Webdriver so far and we can also Close Driver process this will cause issue that we can no longer access any session created through WebDriver which have been recently closed
+We can load required Capabilities by doing, 
 ```AutoHotkey
-ChromeDriver := A_ScriptDir "\chromedriver.exe"
-Driver := new RunDriver(ChromeDriver)
-Driver.Exit() ; use this when you finished using Rufaydium class
+Chrome.capabilities := Capabilities.ChromeDefault
+```
+# Create Session
+we can skip capabilities, as session will load `Capabilities.simple` as default Capabilities which should work with any browser
+after Setting up capabilities we can create session
+```AutoHotkey
+Session := Chrome.NewSession()
+```
+We can also access previously created session with title or URL
+```AutoHotkey
+Session1 := Chrome.getSessionByUrl(URL)
+Session2 := Chrome.getSessionByTitle(Title)
 ```
 # Session.Close() and Session.Exit()
 different between Session.Close() and Session.Exit()
