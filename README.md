@@ -261,6 +261,10 @@ Session.getElementsbyClassName(Class)
 Session.getElementsbyName(Name) ; same as getElementsbyTagName
 Session.getElementsbyXpath(xPath)
 
+; element.getelement 
+element := Session.QuerySelector(Path)[1]       ; unlike IE COM index starts from [1] not [0] `zero` 
+subelement := element.QuerySelector(Path)[1]    ; check out accessing table
+
 above function are simply based on 
 Session.findelement(by.selector,"selectorparameter") 
 Session.findelements(by.selector,"selectorparameter") 
