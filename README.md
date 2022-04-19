@@ -30,6 +30,35 @@ Page.Navigate("https://www.google.com/")
 Page := ""
 return
 ```
+# RunDriver
+Rundriver launches driver in background where port 9515 set to default 
+```AutoHotkey
+Driver := new RunDriver(Driverexelocation,Port,Parameters)
+```
+parameters are webdriver.exe CMD arguments option can vary according to different drivers
+and we can also check these arguments
+```AutoHotkey
+msgbox, % Clipboard := RunDriver.help(Driverexelocation)
+; above msgbox would return following option if using chromedriver
+/*
+Usage: chromedriver.exe [OPTIONS]
+Options
+  --port=PORT                     port to listen on
+  --adb-port=PORT                 adb server port
+  --log-path=FILE                 write server log to file instead of stderr, increases log level to INFO
+  --log-level=LEVEL               set log level: ALL, DEBUG, INFO, WARNING, SEVERE, OFF
+  --verbose                       log verbosely (equivalent to --log-level=ALL)
+  --silent                        log nothing (equivalent to --log-level=OFF)
+  --append-log                    append log file instead of rewriting
+  --replayable                    (experimental) log verbosely and don't truncate long strings so that the log can be replayed.
+  --version                       print the version number and exit
+  --url-base                      base URL path prefix for commands, e.g. wd/url
+  --readable-timestamp            add readable timestamps to log
+  --enable-chrome-logs            show logs from the browser (overrides other logging options)
+  --allowed-ips=LIST              comma-separated allowlist of remote IP addresses which are allowed to connect to ChromeDriver
+  --allowed-origins=LIST          comma-separated allowlist of request origins which are allowed to connect to ChromeDriver. Using `*` to allow any host origin is dangerous!
+*/
+```
 
 # Capabilities Class
 Following class can be used to make required capabilities Custom profile for specific need that support concerned Webdriver. 
@@ -89,6 +118,26 @@ class capabilities
 			"goog:chromeOptions": {
 				"w3c": json.true,
 				"args": ["--user-data-dir=C:/ChromeProfile"],
+				"excludeSwitches": ["enable-automation"]
+			}
+		},
+		"firstMatch": [{}]
+		},
+	"desiredCapabilities": {
+		"browserName": "chrome"
+		}
+	}
+	)
+	static ChromeCustomUserAgent =
+	( LTrim Join
+	{
+	"capabilities": {
+		"alwaysMatch": {
+			"browserName": "chrome",
+			"platformName": "windows",
+			"goog:chromeOptions": {
+				"w3c": json.true,
+				"args" :["--user-agent=Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"],
 				"excludeSwitches": ["enable-automation"]
 			}
 		},
