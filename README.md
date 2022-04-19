@@ -487,9 +487,10 @@ while !isobject(Userform) ;
    Userform := Session.QuerySelector(".User-Form") 
 }
 
-h := Userform.innerText ; but element.methods support error handling
 while !h.error
 {
+    h := Userform.innerText ; but element.methods support error handling
     sleep, 200
 }
+msgbox, % "innerText: " h
 ```
