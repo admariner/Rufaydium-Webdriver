@@ -4,8 +4,8 @@
 ; i.e. for Chrome 100 you need to download ChromeDriver 100.0.4896.60
 ; from https://chromedriver.chromium.org/downloads
 ;
-; It utilizes Rest Api of W3C from https://www.w3.org/TR/webdriver2/
-; Rufadium also supports Chrome Devtools Protocols same as chrome.ahk
+; It utilizes Rest API of W3C from https://www.w3.org/TR/webdriver2/
+; Rufaydium also supports Chrome Devtools Protocols same as chrome.ahk
 ; 
 ; Note: no need to install /setup selenium, Rufaydium is AHK's Selenium
 ; Link : https://www.autohotkey.com/boards/viewtopic.php?f=6&t=102616&p=456008#p456008
@@ -33,7 +33,7 @@ Class Rufaydium
 	{
 		if !instr(url,"HTTP")
 			url := this.address "/" url
-		r := Json.load(Request(url,Method,Payload,WaitForResponse)).value ; Thanks to Geek Dude for hi owsome cJson.ahk
+		r := Json.load(Request(url,Method,Payload,WaitForResponse)).value ; Thanks to GeekDude for his awesome cJson.ahk
 		if r 
 			return r
 	}
@@ -362,7 +362,7 @@ Class Session extends Rufaydium
 		return e
 	}
 	
-	getelementbyid(id)
+	getElementByID(id)
 	{
 		return this.findelement(by.selector,"#" id)
 	}
@@ -505,7 +505,7 @@ Class by
 	static XPath	:= "xpath"
 }
 
-; here you one can make Capabilities profile as per requirment
+; here you one can make Capabilities profile as per requirement
 class capabilities
 {
 	static ChromeDefault =
