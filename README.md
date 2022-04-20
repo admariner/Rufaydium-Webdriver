@@ -456,10 +456,10 @@ Class PrintOptions ; https://www.w3.org/TR/webdriver2/#print
 
 ```AutoHotkey
 Session.move(x,y) move mouse pointer to location
-Session.click(1) ; sending click on moved location ; [button: 1(left) | 2(middle) | 3(right)]
-Session.DoubleClick(1) ; sending double click on moved location ; [button: 1(left) | 2(middle) | 3(right)]
-Session.MBDown(1) ; sending mouse click down on moved location ; [button: 1(left) | 2(middle) | 3(right)]
-Session.MBup(1) ; sending mouse click up on moved location ; [button: 1(left) | 2(middle) | 3(right)]
+Session.click() ; sending left click on moved location ; [button: 0(left) | 1(middle) | 2(right)]
+Session.DoubleClick() ; sending double left click on moved location ; [button: 0(left) | 1(middle) | 2(right)]
+Session.MBDown() ; sending mouse left click down on moved location ; [button: 0(left) | 1(middle) | 2(right)]
+Session.MBup() ; sending mouse left click up on moved location ; [button: 0(left) | 1(middle) | 2(right)]
 ; now you can understand how to drag and drop stuff  read about element location rect and size further down below 
 ```
 
