@@ -508,7 +508,7 @@ Class Session extends Rufaydium
 		return this.Actions(json.load(PointerClicks))
 	}
 	
-	MBDown(i) ; [button: 0(left) | 1(middle) | 2(right)]
+	MBDown(i=0) ; [button: 0(left) | 1(middle) | 2(right)]
 	{
 		;return this.Send("buttondown","POST",{"button":i})		PointerClick =
 		PointerDown =
@@ -529,7 +529,7 @@ Class Session extends Rufaydium
 		return this.Actions(json.load(PointerDown))
 	}
 	
-	MBup(i) ; [button: 0(left) | 1(middle) | 2(right)]
+	MBup(i=0) ; [button: 0(left) | 1(middle) | 2(right)]
 	{
 		;return this.Send("buttonup","POST",{"button":i})
 		PointerUP =
