@@ -460,29 +460,116 @@ Class Session extends Rufaydium
 			msgbox, ,Rufaydium, % "Fail to save PDF`nError : " json.Dump(Base64pdfData) "`n`nMake sure chrome is running headless mode`nPlease define Print Options or use print profiles from PrintOptions.class"
 	}
 	
-	click()
+	click(i:=0) ; [button: 0(left) | 1(middle) | 2(right)]
 	{
-		return this.Send("buttondown","POST",{"button":i})
+		PointerClick =
+		( LTrim Join
+		{
+			"actions": [
+				{
+				"type": "pointer",
+				"id": "mouse",
+				"parameters": {"pointerType": "mouse"},
+				"actions": [
+					{"type": "pointerDown", "button": %i%},
+					{"type": "pause", "duration": 100},
+					{"type": "pointerUp", "button": %i%}
+					]
+				}
+			]
+		}
+		)
+		return this.Actions(json.load(PointerClick))
 	}
 	
-	DoubleClick()
+	DoubleClick(i=0) ; [button: 0(left) | 1(middle) | 2(right)]
 	{
-		return this.Send("buttondown","POST",{"button":i})
+		PointerClicks =
+		( LTrim Join
+		{
+			"actions": [
+				{
+				"type": "pointer",
+				"id": "mouse",
+				"parameters": {"pointerType": "mouse"},
+				"actions": [
+					{"type": "pointerDown", "button": %i%},
+					{"type": "pause", "duration": 100},
+					{"type": "pointerUp", "button": %i%},
+					{"type": "pause", "duration": 500},
+					{"type": "pointerDown", "button": %i%},
+					{"type": "pause", "duration": 100},
+					{"type": "pointerUp", "button": %i%}
+					]
+				}
+			]
+		}
+		)
+		return this.Actions(json.load(PointerClicks))
 	}
 	
-	MBDown(i) ; [button: 1(left) | 2(middle) | 3(right)]
+	MBDown(i) ; [button: 0(left) | 1(middle) | 2(right)]
 	{
-		return this.Send("buttondown","POST",{"button":i})
+		;return this.Send("buttondown","POST",{"button":i})		PointerClick =
+		PointerDown =
+		( LTrim Join
+		{
+			"actions": [
+				{
+				"type": "pointer",
+				"id": "mouse",
+				"parameters": {"pointerType": "mouse"},
+				"actions": [
+					{"type": "pointerDown", "button": %i%}
+					]
+				}
+			]
+		}
+		)
+		return this.Actions(json.load(PointerDown))
 	}
 	
-	MBup(i) ; [button: 1(left) | 2(middle) | 3(right)]
+	MBup(i) ; [button: 0(left) | 1(middle) | 2(right)]
 	{
-		return this.Send("buttonup","POST",{"button":i})
+		;return this.Send("buttonup","POST",{"button":i})
+		PointerUP =
+		( LTrim Join
+		{
+			"actions": [
+				{
+				"type": "pointer",
+				"id": "mouse",
+				"parameters": {"pointerType": "mouse"},
+				"actions": [
+					{"type": "pointerUp", "button": %i%}
+					]
+				}
+			]
+		}
+		)
+		return this.Actions(json.load(PointerUP))
 	}
 	
 	Move(x,y)
 	{
-		return this.Send("moveto","POST",{"offsetx":x,"offsety":y})
+		PointerMove =
+		( LTrim Join
+		{
+			"actions": [
+				{
+				"type": "pointer",
+				"id": "mouse",
+				"parameters": {"pointerType": "mouse"},
+				"actions": [{
+							"type": "pointerMove",
+							"duration": 0,
+							"x": %x%, "y": %y%
+							}]
+				}
+			]
+		}
+		)
+		return this.Actions(json.load(PointerMove))
 	}
 	
 	Actions(ActionObj)
