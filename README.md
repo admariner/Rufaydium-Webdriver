@@ -301,9 +301,9 @@ Session.IsLoading()
 Session.getElementByID(id)
 Session.QuerySelector(Path)
 Session.QuerySelectorAll(Path)
-Session.(Class)
-Session.(Name) ; same as 
-Session.(xPath)
+Session.getElementsbyClassName(Class)
+Session.getElementsbyName(Name) ; same as 
+Session.getElementsbyXpath(xPath)
 
 ; element.getelement 
 element := Session.QuerySelector(Path)[1]       ; unlike IE COM index starts from [1] not [0] `zero` 
