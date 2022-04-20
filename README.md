@@ -302,7 +302,7 @@ Session.getElementByID(id)
 Session.QuerySelector(Path)
 Session.QuerySelectorAll(Path)
 Session.getElementsbyClassName(Class)
-Session.getElementsbyName(Name) ; same as 
+Session.getElementsbyName(TagName) ; same as getElementsbyTagName(TagName)
 Session.getElementsbyXpath(xPath)
 
 ; element.getelement 
