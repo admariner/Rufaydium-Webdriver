@@ -49,6 +49,28 @@ Class RunDriver
 		Process, Close, % PID
 		return Content
 	}
+	
+	visible
+	{
+		get
+		{
+			return this.visibility
+		}
+		
+		set
+		{
+			if(value = 1) and !this.visibility
+			{
+				winshow, % "ahk_pid " this.pid
+				this.visibility := 1
+			}
+			else
+			{
+				winhide, % "ahk_pid " this.pid
+				this.visibility := 0
+			}
+		}
+	}
 }
 
 /*
