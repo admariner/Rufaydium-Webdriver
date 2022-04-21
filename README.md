@@ -72,7 +72,11 @@ Options
   --allowed-origins=LIST          comma-separated allowlist of request origins which are allowed to connect to ChromeDriver. Using `*` to allow any host origin is dangerous!
 */
 ```
-
+Driver Hide unhide Driver CMD window
+```AutoHotKey
+Driver.visible := true ; will unhide
+Driver.visible := false ; will hide
+```
 ## Script reloading
 
 We can reload script as many time as we want but driver will be active in process so we can have control over all the session created through WebDriver so far and we can also Close Driver process this will cause issue that we can no longer access any session created through WebDriver. its better to `Session.exit()` then `Driver.Exit()`
