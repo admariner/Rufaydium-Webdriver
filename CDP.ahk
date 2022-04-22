@@ -499,20 +499,19 @@ Class CDPElement extends CDP
 	{
 		get
 		{
-			ohtml := this.outerHTML
 			d  := ComObjCreate("htmlfile")
-			d.write(ohtml)
+			d.write(this.outerHTML)
 			return d.querySelector("*").innerText
 		}
 		
 		set
 		{
 			d  := ComObjCreate("htmlfile")
-			d.write(this.outerHTML)
+			d.write(ohtml := this.outerHTML)
 			iText := d.querySelector("*").innerText
 			nHtml := StrReplace(ohtml,itext,value)
 			if(ohtml != nHtml)
-				this.outerHTML := (nHtml)
+				this.outerHTML := nHtml
 			return value
 		}
 	}
