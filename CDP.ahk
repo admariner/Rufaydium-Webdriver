@@ -12,7 +12,8 @@ class CDP extends Rufaydium
 	
 	Document()
 	{
-		root := this.call("DOM.getDocument",{"depth": -1,"pierce":json.true()}) ;this.call("DOM.getDocument",{"":""})
+		; this.call("DOM.getDocument",{"depth": -1,"pierce":json.true()}) ; its slow, this will get all frame nodeid if cross origin enabled
+		root := this.call("DOM.getDocument",{"":""}) 
 		this.nodeId := root.root.nodeId	
 	}
 	
