@@ -597,7 +597,8 @@ while !h.error
 MsgBox, % "innerText: " h
 ```
 ## Session.CDP
-Session.Methods act like Human interactions with Webpage, Where Session.CDP has access to Chrome Devtools protocols, which has the power to Modify DOM 
+Session.Methods act like Human interactions with Webpage, Where Session.CDP has access to Chrome Devtools protocols, which has the power to Modify DOM
+
 Example
 ```AutoHotkey
 ChromeDriver := A_ScriptDir "\chromedriver.exe"
