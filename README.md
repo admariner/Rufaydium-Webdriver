@@ -643,14 +643,18 @@ elements := Session.CDP.getElementsbyClassName(Class)
 elements := Session.CDP.getElementsbyName(Tagename)
 
 /* getting element by JS function 
-1) GetelementbyJS() can only be used on Document like Document.GetelementbyJS(JS), yes it will work on element but it would consider document as base node / pointer
+1) GetelementbyJS() can only be used on Document like Document.GetelementbyJS(JS), yes it will work on element 
+   but it would consider document as base node / pointer
 2) The JS should return with element or array of elements i.e. GetelementbyJS("document.querySelectorAll('input')")
-if you want to pass function and wana use results from it then you can pass your function which should return with one element or array of elements like this
-Page.Evaluate(someJSfunction)
-element := Document.GetelementbyJS("JSfunc()")
-3) you can use GetelementbyJS(js).value := var and GetelementbyJS(js)[].value := var it totally depends on you JavaScript what you are passing,
-4) you can't do something like this GetelementbyJS("document.querySelector('input').value = '1234'") there is Page.Evaluate() for that
-5) What I think GetelementbyJS() is slow we should use DOM.querySelector for fast results but JavaScript geeks would understand that why I have made GetelementbyJS(), in some scenarios JS get results more faster, like above I mentioned about passing JS custom function,
+if you want to pass function and wana use results from it then you can pass your function which should return with 
+   one element or array of elements like this
+3) you can use GetelementbyJS(js).value := var and GetelementbyJS(js)[].value := var it totally depends on you 
+   JavaScript what you are passing,
+4) you can't do something like this GetelementbyJS("document.querySelector('input').value = '1234'") there is 
+   CDP.Evaluate() for that
+5) What I think GetelementbyJS() is slow we should use DOM.querySelector for fast results but JavaScript users 
+   would understand that why I have made GetelementbyJS(), in some scenarios JS get results more faster, 
+   like above I mentioned below passing JS custom function using Evaluate,
 */
 element := Session.CDP.GetelementbyJS("JSfunc()") ; JS funct
 
