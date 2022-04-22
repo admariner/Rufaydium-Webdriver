@@ -598,7 +598,28 @@ MsgBox, % "innerText: " h
 ```
 ## Session.CDP
 Session.Methods act like Human interactions with Webpage, Where Session.CDP has access to Chrome Devtools protocols, which has the power to Modify DOM 
+Example
+```AutoHotkey
+ChromeDriver := A_ScriptDir "\chromedriver.exe"
+; incase driver is already running it will get access driver which is already running
+Driver := new RunDriver(ChromeDriver) 
+Chrome := new Rufaydium(Driver)
+Page := Chrome.getSessionByUrl(Webpage) ; getting session
 
+if !isobject(Page)
+{
+	msgbox, no session found
+	return
+}
+
+Page.CDP.Document()	; initialize Document
+input := Page.CDP.QuerySelector(".mb-2")
+msgbox, % input.innerText
+for k , tag in  Page.cdp.QuerySelectorAll("input") ; full all input boxes with their ids
+{
+	tag.sendKey(tag.id)
+}
+```
 # CDP.Document()
 CDP support DOM and we can access any element using getelement with same method and syntax as Session.methods() but to acces DOM DOM.getDocument is crucial which Assign NodeId to to elements for access, after that we can use getelement through CDP
 https://chromedevtools.github.io/devtools-protocol/tot/DOM/
