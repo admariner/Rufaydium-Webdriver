@@ -596,4 +596,105 @@ while !h.error
 }
 MsgBox, % "innerText: " h
 ```
+## Session.CDP
+Session.Methods act like Human interactions with Webpage, Where Session.CDP has access to Chrome Devtools protocols, which has the power to Modify DOM 
 
+# CDP.Document()
+CDP support DOM and we can access any element using getelement with same method and syntax as Session.methods() but to acces DOM DOM.getDocument is crucial which Assign NodeId to to elements for access, after that we can use getelement through CDP
+https://chromedevtools.github.io/devtools-protocol/tot/DOM/
+```AutoHotkey
+Session.CDP.Document()
+; Now we can access any element
+Session.CDP.querySelectorAll(selector)
+```
+# CDP functionalities
+```AutoHotkey
+Session.CDP.navigate(url) ; navigate to url
+Session.CDP.WaitForLoad() ; unlike Session.methods() CDP does not support await
+
+; getting element
+element := Session.CDP.querySelector(selector) 
+element := Session.CDP.getElementByID(ID)
+; getting array or elements
+elements := Session.CDP.querySelectorAll(selector) 
+elements := Session.CDP.getElementsbyClassName(Class)
+elements := Session.CDP.getElementsbyName(Tagename)
+
+/* getting element by JS function 
+1) GetelementbyJS() can only be used on Document like Document.GetelementbyJS(JS), yes it will work on element but it would consider document as base node / pointer
+2) The JS should return with element or array of elements i.e. GetelementbyJS("document.querySelectorAll('input')")
+if you want to pass function and wana use results from it then you can pass your function which should return with one element or array of elements like this
+Page.Evaluate(someJSfunction)
+element := Document.GetelementbyJS("JSfunc()")
+3) you can use GetelementbyJS(js).value := var and GetelementbyJS(js)[].value := var it totally depends on you JavaScript what you are passing,
+4) you can't do something like this GetelementbyJS("document.querySelector('input').value = '1234'") there is Page.Evaluate() for that
+5) What I think GetelementbyJS() is slow we should use DOM.querySelector for fast results but JavaScript geeks would understand that why I have made GetelementbyJS(), in some scenarios JS get results more faster, like above I mentioned about passing JS custom function,
+*/
+element := Session.CDP.GetelementbyJS("JSfunc()") ; JS funct
+
+; get element by location
+; this menthod does not reriued Session.CDP.Document()
+element := Session.CDP.getelementbyLocation(x,y)
+```
+# CDP.Element
+Following methods only applicable of element return from CDP 
+```AutoHotkey
+CDP_element.getBoxModel()	; with Json array of element coord margins and paddings detail
+CDP_element.getNodeQuads()	; quads are x immediately followed by y for each point, points clock-wise
+
+val := CDP_element.value	; get value
+CDP_element.value := "abcd"	; set value
+
+eleClass := CDP_element.class	; get Class
+CDP_element.class := "abcd"	; set Class
+
+eleID := CDP_element.id		; get id
+CDP_element.id := "abcd"	; set id
+
+text := CDP_element.innerText	; get innerText
+CDP_element.innerText := "abcd"	; set innerText
+
+text := CDP_element.textContent	; get textContent
+
+html := CDP_element.OuterHTML	; get html
+CDP_element.OuterHTML := htmlstring	; set html
+
+allattribus := CDP_element.getAttributes() ; gets all the attirbuts as Object wecan use json dump to see whats inside
+value := CDP_element.getAttribute(Name) ; getting specific attribute value base on above method
+CDP_element.setAttribute(Name,Value) : change attribute value
+
+; this uses dispatch event with istrusted parameter true
+CDP_element.click() ; send click()
+CDP_element.ClickCoord(x,y, delay:= 10) ; send click to a coord
+CDP_element.SendKey("1234`n") ; send 1 2 3 4 enter
+```
+
+# CDP Evaluate(JS)
+`Session.CDP.Evaluate()` simply execute Javascript which we send to `chrome.console` in order to debug
+```AutoHotkey
+js = 
+(
+function findByTextContent(searchText)
+{
+var aTags = document.querySelectorAll("[Class='mb-4 block-menu-item col-xl-auto col-lg-4 col-sm-6 col-12']");
+var found;
+for (var i = 0; i < aTags.length; i++) {
+  if (aTags[i].textContent == searchText) {
+    found = aTags[i];
+    break;
+  }
+}
+return found
+}
+)
+Session.CDP.evaluate(js)
+Session.CDP.evaluate("findByTextContent('" btnName "').childNodes[0].click()")
+```
+# CDP Call
+Call is `sendCommand call` for Chrome Devtools protocols, https://chromedevtools.github.io/devtools-protocol/ 
+all above methods are Based on CDP.Call() `Session.CDP.call(method,Json_param)`
+```AutoHotkey
+ExtList := ["*.ttf","*.gif" , "*.png" , "*.jpg" , "*.jpeg" , "*.webp"]
+Session.CDP.call("Network.enable")
+Session.CDP.call("Network.setBlockedURLs",{"urls": ExtList })
+```
