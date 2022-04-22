@@ -43,7 +43,7 @@ Rundriver launches driver in background where port 9515 set to default
 
 ```AutoHotkey
 Driver := new RunDriver(Driverexelocation,Port,Parameters)
-;Driver2 := new RunDriver(firefoxDriver.exe,9516) ; we can load multiple different drivers 
+;Driver2 := new RunDriver(geckodriver.exe,4444) ; we can load multiple different drivers 
 ```
 
 parameters are WebDriver.exe CMD arguments option can vary according to different drivers
