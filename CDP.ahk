@@ -101,11 +101,6 @@ class CDP extends Rufaydium
 		return e
 	}
 	
-	setOuterHTML(Html)
-	{
-		this.call("DOM.setOuterHTML",{"nodeId":this.nodeId,"outerHTML":Html})
-	}
-	
 	getElementsbyClassName(Class)
 	{
 		e := []
@@ -312,6 +307,10 @@ class CDP extends Rufaydium
 			return this.call("DOM.getOuterHTML",{"nodeId":this.nodeId}).OuterHTML
 		}
 		
+		set
+		{
+			this.call("DOM.setOuterHTML",{"nodeId":this.nodeId,"outerHTML":value})
+		}		
 	}
 	
 	getAttributes()
@@ -508,13 +507,12 @@ Class CDPElement extends CDP
 		
 		set
 		{
-			ohtml := this.outerHTML
 			d  := ComObjCreate("htmlfile")
-			d.write(ohtml)
+			d.write(this.outerHTML)
 			iText := d.querySelector("*").innerText
 			nHtml := StrReplace(ohtml,itext,value)
 			if(ohtml != nHtml)
-				this.setOuterHTML(nHtml)
+				this.outerHTML := (nHtml)
 			return value
 		}
 	}
@@ -523,9 +521,8 @@ Class CDPElement extends CDP
 	{
 		get
 		{
-			ohtml := this.outerHTML
 			d  := ComObjCreate("htmlfile")
-			d.write(ohtml)
+			d.write(this.outerHTML)
 			return d.querySelector("*").textContent
 		}
 		
