@@ -620,7 +620,7 @@ for k , tag in  Page.cdp.QuerySelectorAll("input") ; full all input boxes with t
 }
 ```
 # CDP.Document()
-CDP support DOM and we can access any element using getelement with same method and syntax as Session.methods() but to acces DOM DOM.getDocument is crucial which Assign NodeId to to elements for access, after that we can use getelement through CDP
+CDP support DOM and we can access any element using getelement with same method and syntax as Session.methods() but to accessing DOM we need to do DOM.getDocument which is crucial, it Assigns NodeId to to elements for access, after that we can use getelement through CDP
 https://chromedevtools.github.io/devtools-protocol/tot/DOM/
 ```AutoHotkey
 Session.CDP.Document()
