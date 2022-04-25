@@ -576,16 +576,14 @@ Waiting of webpage is based of document ready state https://www.w3schools.com/js
 but there are web pages they keep loading and unload elements and stuff while their ready state remain `complete` 
 In this kind of situationn Rufaydium Basic and Rufaydium CDP would simply wait through error or if element in question is not available or element visibility or enable state element.displayed(), element.enabled(), we can use these tricks to make AutoHotkey wait, 
 for example:
-We have click button and this would load element having innerText `User Form`
+We have click button and this would load element with tagname button
 
-```AutoHotkey
-button := Session.QuerySelector("button")
-
+```Authotkey
 while !IsObject(button) ; 
 {
    sleep, 200
    ; getting element do not support error handling for now but they do return with element object if found and empty when find nothing
-   Userform := Session.QuerySelector(".User-Form") 
+   button := Session.QuerySelector("button") 
 }
 h := button.innerText
 while h.error
@@ -593,6 +591,7 @@ while h.error
     h := button.innerText ; but element.methods support error handling
     sleep, 200
 }
+Msgbox, % "innerText" h ; otherwise h has innertext
 Button.click()
 ```
 ## Session.CDP
