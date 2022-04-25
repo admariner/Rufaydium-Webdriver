@@ -290,6 +290,7 @@ response :=  Session.method()
 if response.error
 	MsgBox, % "error:" response.error "`nDetail:`n" json.dump(response)
 response :=  Element.method()
+
 if response.error
 	MsgBox, % "error:" response.error "`nDetail:`n" json.dump(response)	
 ```
@@ -573,28 +574,26 @@ but task executed through CDP `Session.CDP` would wait, therefore we need to use
 
 Waiting of webpage is based of document ready state https://www.w3schools.com/jsref/prop_doc_readystate.asp
 but there are web pages they keep loading and unload elements and stuff while their ready state remain `complete` 
-Rufaydium Basic and Rufaydium CDP would simply through error if element in question is not available 
-
-we can use few tricks to make AutoHotkey wait, for example:
-
+In this kind of situationn Rufaydium Basic and Rufaydium CDP would simply wait through error or if element in question is not available or element visibility or enable state element.displayed(), element.enabled(), we can use these tricks to make AutoHotkey wait, 
+for example:
 We have click button and this would load element having innerText `User Form`
 
 ```AutoHotkey
-Session.QuerySelector("button"),click()
+button := Session.QuerySelector("button")
 
-while !IsObject(Userform) ; 
+while !IsObject(button) ; 
 {
    sleep, 200
    ; getting element do not support error handling for now but they do return with element object if found and empty when find nothing
    Userform := Session.QuerySelector(".User-Form") 
 }
-
-while !h.error
+h := button.innerText
+while h.error
 {
-    h := Userform.innerText ; but element.methods support error handling
+    h := button.innerText ; but element.methods support error handling
     sleep, 200
 }
-MsgBox, % "innerText: " h
+Button.click()
 ```
 ## Session.CDP
 Session.Methods act like Human interactions with Webpage, Where Session.CDP has access to Chrome Devtools protocols, which has the power to Modify DOM
