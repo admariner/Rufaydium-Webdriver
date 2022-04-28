@@ -729,6 +729,7 @@ value := CDP_element.getAttribute(Name) ; getting specific attribute value base 
 CDP_element.setAttribute(Name,Value) : change attribute value
 
 ; this uses dispatch event with istrusted parameter true
+CDP_element.focus()
 CDP_element.click() ; send click()
 CDP_element.ClickCoord(x,y, delay:= 10) ; send click to a coord
 CDP_element.SendKey("1234`n") ; send 1 2 3 4 enter
