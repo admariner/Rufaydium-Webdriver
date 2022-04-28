@@ -245,7 +245,7 @@ msgbox, Page refresh complete
 Tells page is ready or not by Returning with true fales status, this will be helpful for chrome 
 note: this function is not w3c standred will worl only with Chromedriver
 ```AutoHotkey
-msgbox, % Session.Refresh()
+msgbox, % Session.IsLoading()
 ```
 ## Session.Navigate(url)
 Navigates to requested URL
