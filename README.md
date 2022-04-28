@@ -4,7 +4,7 @@
 
 Rufaydium is a WebDriver Library for AutoHotkey to support any Chromium based browser using WebDriver
 
-Forum: https://www.autohotkey.com/boards/viewtopic.php?f=6&p=457291#p457291
+Forum: https://www.autohotkey.com/boards/viewtopic.php?f=6&t=102616
 
 WebDriver: https://chromedriver.chromium.org/downloads  
 (i.e. for Chrome 100 you need to download ChromeDriver 100.0.4896.60)
