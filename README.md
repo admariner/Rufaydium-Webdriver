@@ -250,7 +250,7 @@ msgbox, % Session.IsLoading()
 ## Session.Navigate(url)
 Navigates to requested URL
 ```AutoHotkey
-msgbox, % Session.Navigate("https://www.autohotkey.com/")
+Session.Navigate("https://www.autohotkey.com/")
 ```
 ## Session.Back() & Session.Forward()
 helps navigate to prevous and from previous to recent page acting like browser bank and forward button, 
