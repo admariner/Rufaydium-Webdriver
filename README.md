@@ -255,6 +255,13 @@ Session.Navigate("https://www.autohotkey.com/")
 ## Session.Back() & Session.Forward()
 helps navigate to prevous and from previous to recent page acting like browser bank and forward button, 
 
+## SwitchbyTitle() & SwitchbyURL()
+Help switching between Tabs
+```AutoHotkey
+Session.SwitchbyTitle(Title)
+Session.SwitchbyURL(url)
+```
+
 ## Session window position and location
 ```AutoHotkey
 ; Getting window position and location
