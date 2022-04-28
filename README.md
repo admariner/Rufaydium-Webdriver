@@ -195,60 +195,60 @@ We can load required Capabilities by doing,
 ```AutoHotkey
 Chrome.capabilities := Capabilities.ChromeDefault
 ```
-## Webdriver Sessions
-# New Session
-
+# Webdriver Sessions
+## New Session
 We can skip capabilities, as session will load `Capabilities.simple` as default Capabilities which should work with any browser.  
-
 We can create session after Setting up capabilities 
-
 ```AutoHotkey
 Session := Chrome.NewSession()
 ```
-
 We can also access previously created session with title or URL
-
 ```AutoHotkey
 Session := Chrome.getSessionByUrl(URL)
 Session2 := Chrome.getSessionByTitle(Title)
 ```
-# Session.NewTab()
+## Session.NewTab()
 Creates and switch to new tab
 ```AutoHotkey
 Session.NewTab()
 ```
 
-# Session.Title()
+## Session.Title()
 returns Page title
 ```AutoHotkey
 msgbox, % Session.NewTab()
 ```
 
-# Session.url()
+## Session.HTML()
+returns Page HTML
+```AutoHotkey
+msgbox, % Session.HTML()
+```
+## Session.url()
 return Page URL
 ```AutoHotkey
 msgbox, % Session.url()
 ```
 
-# Session.Refresh()
+## Session.Refresh()
 Refresh page and wait untill page get refreshed
 ```AutoHotkey
 Session.Refresh()
 msgbox, Page refresh complete
 ```
 
-# Session.IsLoading()
+## Session.IsLoading()
 Tells page is ready or not by Returning with true fales status, this will be helpful for chrome 
 note: this function is not w3c standred will worl only with Chromedriver
 ```AutoHotkey
 msgbox, % Session.Refresh()
 ```
-# Session.Navigate(url)
+## Session.Navigate(url)
 Navigates to requested URL
 ```AutoHotkey
 msgbox, % Session.Navigate("https://www.autohotkey.com/")
 ```
-# Session.Back() & Session.Forward()
+## Session.Back() & Session.Forward()
 helps navigate to prevous and from previous to recent page acting like browser bank and forward button, 
 
 ## Session window position and location
@@ -284,7 +284,7 @@ Session.Maximize()
 ```
 
 
-# Session.Close() and Session.Exit()
+## Session.Close() and Session.Exit()
 Difference between Session.Close() and Session.Exit()
 
 ```AutoHotkey
@@ -299,7 +299,7 @@ Page1.Navigate("https://www.autohotkey.com/boards/viewtopic.php?t=94276") ; navi
 Page1.exit() ; will close all windows / tabs will end up closing whole session 
 ```
 
-# Switching Between Window Tabs & Frame
+## Switching Between Window Tabs & Frame
 
 We Switch Tabs using `Session.SwitchbyTitle(Title)` or `Session.SwitchbyURL(url="")`
 but Session remain the same If you check out examples I posted you would easily understand how switching Tab works.
@@ -439,8 +439,14 @@ for r, row in StrSplit(Table,"`n")
 MsgBox, % Tablearray[1,5]
 ```
 
-# Handling Session alerts popup messages
+## Session.ActiveElement()
+returns handle for focused / active elment, this will function can also act as a bridge between Session.CDP and Session.Basic
+```AutoHotkey
+CDPelement.focus()
+element := Session.ActiveElement() ; now we have access of element which we previously focused using CDP
+```
 
+## Handling Session alerts popup messages
 ```AutoHotkey
 Session.Alert("GET") ; getting text from pop up msg
 Session.Alert("accept") ; pressing OK / accept pop up msg
@@ -449,25 +455,20 @@ Session.Alert("Send","some text")  ; sending a Alert / pop up msg
 ```
 
 ## Tacking Screen Shots accept only png file format
-
 ```AutoHotkey
 Session.Screenshot("picture location") ; will save PNG to location
 Element.Screenshot("picture location") ; will save PNG to location
 ```
 
 ## PDF printing 
-
 Supported only for headless mode according to WebDriver.
-
 ```AutoHotkey
 Session.print(PDFlocation,PrintOptions.A4_Default) ; see Class PrintOptions
 Session.print(PDFlocation,{"":""}) ; for default print options
 ```
 
 ## Class PrintOptions
-
 PrintOptions to make custom PrintOptions
-
 ```AutoHotkey
 Class PrintOptions ; https://www.w3.org/TR/webdriver2/#print
 {
