@@ -202,11 +202,15 @@ We can create session after Setting up capabilities
 ```AutoHotkey
 Session := Chrome.NewSession()
 ```
-We can also access previously created session with title or URL
+We can also access previously created session with title or URL, 
+ 
 ```AutoHotkey
 Session := Chrome.getSessionByUrl(URL)
 Session2 := Chrome.getSessionByTitle(Title)
 ```
+
+Note: above methods are based on Rufaydium.getSessions() which is not W3C standred and only supports Chrome or chrome Based browser, does not support firefox's geckodriver.exe, I am thinking about saving all session IDs created from geckodriver and saving them into some ini and implemenet `getSessionByUrl()` & `getSessionByTitle()`.
+
 ## Session.NewTab()
 Creates and switch to new tab
 ```AutoHotkey
