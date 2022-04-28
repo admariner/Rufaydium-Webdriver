@@ -195,8 +195,8 @@ We can load required Capabilities by doing,
 ```AutoHotkey
 Chrome.capabilities := Capabilities.ChromeDefault
 ```
-
-# Create Session
+## Webdriver Sessions
+# New Session
 
 We can skip capabilities, as session will load `Capabilities.simple` as default Capabilities which should work with any browser.  
 
@@ -209,12 +209,82 @@ Session := Chrome.NewSession()
 We can also access previously created session with title or URL
 
 ```AutoHotkey
-Session1 := Chrome.getSessionByUrl(URL)
+Session := Chrome.getSessionByUrl(URL)
 Session2 := Chrome.getSessionByTitle(Title)
 ```
+# Session.NewTab()
+Creates and switch to new tab
+```AutoHotkey
+Session.NewTab()
+```
+
+# Session.Title()
+returns Page title
+```AutoHotkey
+msgbox, % Session.NewTab()
+```
+
+# Session.url()
+return Page URL
+```AutoHotkey
+msgbox, % Session.url()
+```
+
+# Session.Refresh()
+Refresh page and wait untill page get refreshed
+```AutoHotkey
+Session.Refresh()
+msgbox, Page refresh complete
+```
+
+# Session.IsLoading()
+Tells page is ready or not by Returning with true fales status, this will be helpful for chrome 
+note: this function is not w3c standred will worl only with Chromedriver
+```AutoHotkey
+msgbox, % Session.Refresh()
+```
+# Session.Navigate(url)
+Navigates to requested URL
+```AutoHotkey
+msgbox, % Session.Navigate("https://www.autohotkey.com/")
+```
+# Session.Back() & Session.Forward()
+helps navigate to prevous and from previous to recent page acting like browser bank and forward button, 
+
+## Session window position and location
+```AutoHotkey
+; Getting window position and location
+sessionrect := Session.Getrect()
+MsgBox, % json.dump(sessionrect)
+; set session window position and location
+Srect := Session.SetRect(20,30,500,400) ; x, y, w, h 
+; error handling
+if Srect.error
+	MsgBox, % Srect.error
+; setting rect will return rect array
+rect := Session.SetRect(1,1) ; this maximize to cover full screen and while taking care of taskbar
+MsgBox, % json.Dump(rect)
+; sometime we only want to play with x or y 
+Session.x := 30
+MsgBox, % session.y
+; this also return whole rect as well ; not just height and also 
+k := Session.height := A_ScreenHeight - (A_ScreenHeight * 5 / 100)
+if !k.error
+	MsgBox, json.dump(k)
+
+Session.Maximize() ; this will Maximize session window
+windowrect := Session.Minimize() ; this will minimize session window
+if !windowrect.error ; error handling 
+	MsgBox, % json.dump(windowrect) ; if not error return with window rect
+
+; following will turn full screen mode on
+MsgBox, % Json.Dump(Session.FullScreen()) ; return with rect, you can see x and y are zero h w are full screen sizes
+; this simply turn fullscreen mode of
+Session.Maximize()
+```
+
 
 # Session.Close() and Session.Exit()
-
 Difference between Session.Close() and Session.Exit()
 
 ```AutoHotkey
@@ -367,40 +437,6 @@ for r, row in StrSplit(Table,"`n")
 	}
 }
 MsgBox, % Tablearray[1,5]
-```
-
-
-## Session window position and location
-
-```AutoHotkey
-; Getting window position and location
-sessionrect := Session.Getrect()
-MsgBox, % json.dump(sessionrect)
-; set session window position and location
-Srect := Session.SetRect(20,30,500,400) ; x, y, w, h 
-; error handling
-if Srect.error
-	MsgBox, % Srect.error
-; setting rect will return rect array
-rect := Session.SetRect(1,1) ; this maximize to cover full screen and while taking care of taskbar
-MsgBox, % json.Dump(rect)
-; sometime we only want to play with x or y 
-Session.x := 30
-MsgBox, % session.y
-; this also return whole rect as well ; not just height and also 
-k := Session.height := A_ScreenHeight - (A_ScreenHeight * 5 / 100)
-if !k.error
-	MsgBox, json.dump(k)
-
-Session.Maximize() ; this will Maximize session window
-windowrect := Session.Minimize() ; this will minimize session window
-if !windowrect.error ; error handling 
-	MsgBox, % json.dump(windowrect) ; if not error return with window rect
-
-; following will turn full screen mode on
-MsgBox, % Json.Dump(Session.FullScreen()) ; return with rect, you can see x and y are zero h w are full screen sizes
-; this simply turn fullscreen mode of
-Session.Maximize()
 ```
 
 # Handling Session alerts popup messages
