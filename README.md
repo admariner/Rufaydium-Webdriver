@@ -440,7 +440,7 @@ MsgBox, % Tablearray[1,5]
 ```
 
 ## Session.ActiveElement()
-returns handle for focused / active elment, this will function can also act as a bridge between Session.CDP and Session.Basic
+returns handle for focused / active elment, this function can also act as a bridge between Session.CDP and Session.Basic
 ```AutoHotkey
 CDPelement.focus()
 element := Session.ActiveElement() ; now we have access of element which we previously focused using CDP
