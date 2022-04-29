@@ -162,6 +162,14 @@ Class Session extends Rufaydium
 		return this.Send("title","GET")
 	}
 	
+	SwitchTab(i=0)	
+	{
+		if i
+		{
+			return this.Switch(This.currentTab := this.GetTabs()[i])
+		}
+	}
+	
 	SwitchbyTitle(Title="")
 	{
 		handles := this.GetTabs()
