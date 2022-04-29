@@ -79,6 +79,19 @@ Class Rufaydium
 		return windows
 	}
 	
+	getSession(i=0,T=0)
+	{
+		if i
+		{
+			S := this.getSessions()[i])
+			if t
+			{
+				S.Switch(Tabid)
+			}
+			return S
+		}
+	}
+	
 	getSessionByUrl(URL)
 	{
 		for k, w in this.getSessions()
