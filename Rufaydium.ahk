@@ -79,14 +79,14 @@ Class Rufaydium
 		return windows
 	}
 	
-	getSession(i=0,T=0)
+	getSession(i=0,t=0)
 	{
 		if i
 		{
 			S := this.getSessions()[i])
 			if t
 			{
-				S.Switch(Tabid)
+				S.SwitchTab(t)
 			}
 			return S
 		}
