@@ -83,7 +83,7 @@ Class Rufaydium
 	{
 		if i
 		{
-			S := this.getSessions()[i])
+			S := this.getSessions()[i]
 			if t
 			{
 				S.SwitchTab(t)
