@@ -363,7 +363,8 @@ Class Session extends Rufaydium
 	{
 		for element, elementid in this.Send("element","POST",{"using":u,"value":v},1)
 		{
-			address := RegExReplace(this.address "/element/" elementid,"(\/element\/.*)\/element","/element")
+			address := RegExReplace(this.address "/element/" elementid,"(\/shadow\/.*)\/element","/element")
+			address := RegExReplace(address "/element/" elementid,"(\/element\/.*)\/element","/element")
 			return New WDElement(address)
 		}
 	}
@@ -376,11 +377,21 @@ Class Session extends Rufaydium
 		{
 			for i, elementid in element
 			{
-				address := RegExReplace(this.address "/element/" elementid,"(\/element\/.*)\/element","/element")
+				address := RegExReplace(this.address "/element/" elementid,"(\/shadow\/.*)\/element","/element")
+				address := RegExReplace(address "/element/" elementid,"(\/element\/.*)\/element","/element")
 				e[k] := New WDElement(address)
 			}
 		}
 		return e
+	}
+	
+	shadow()
+	{
+		for i,  elementid in this.Send("shadow","GET")
+		{
+			address := RegExReplace(this.address "/element/" elementid,"(\/element\/.*)\/element","/shadow")
+			return new ShadowElement(address)
+		}
 	}
 	
 	getElementByID(id)
