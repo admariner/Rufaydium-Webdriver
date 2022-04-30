@@ -138,6 +138,14 @@ Class WDElement extends Session
 	
 }
 
+Class ShadowElement extends Session
+{
+	__new(Address)
+	{
+		This.Address := Address
+	}
+}
+
 Class Key
 {
 	static Unidentified := "\uE000"
