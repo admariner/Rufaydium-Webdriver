@@ -404,6 +404,18 @@ Session.findelements(by.selector,"selectorparameter")
 ; you can see by class
 ```
 
+## Shadow Elements
+Shadow elements can easily be accessed using `element.shadow()`
+Following example will navigates to Chrome extensions page and enables Developer mode
+```autohotkey
+Driver := new RunDriver(chromedriver.exe)
+Driver.visible := true
+Chrome := new Rufaydium(Driver)
+Chrome.capabilities := Capabilities.Abeerium
+Page := Chrome.getSessionByUrl("chrome://extensions")
+page.QuerySelector("extensions-manager").shadow().QuerySelector("extensions-toolbar").shadow().getelementbyid("devMode").click()
+```
+
 ## by Class
 
 ```AutoHotkey
