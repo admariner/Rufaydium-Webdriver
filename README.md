@@ -629,7 +629,37 @@ Class Key
 	static ZenkakuHankaku:= "\uE040"	
 }
 ```
+# Session.Actions()
+We can interact with page using `Actions()` these inertaction can be are define as pointer a pointer can be mouse, touch or keyboard
+Following Example will try to draw a pantagon for working example see https://www.autohotkey.com/boards/viewtopic.php?f=6&t=102616&start=40#p458272
 
+```autohotkey
+; defining Actionobject
+Pentagon =
+( LTrim Join
+{
+"actions": [
+	{
+	"type": "pointer",
+	"id": "mouse",
+	"parameters": {"pointerType": "mouse"},
+	"actions": [
+		{"type": "pointerDown", "button": 0},
+		{"type": "pointerMove", "duration": 10,"x":288, "y":258},
+		{"type": "pointerMove", "duration": 10,"x":391, "y":181},
+		{"type": "pointerMove", "duration": 10,"x":493, "y":258},
+		{"type": "pointerMove", "duration": 10,"x":454, "y":358},
+		{"type": "pointerMove", "duration": 10,"x":328, "y":358},
+		{"type": "pointerMove", "duration": 10,"x":288, "y":258},
+		{"type": "pointerUp", "button": 0}
+		]
+		}
+	]
+}
+)
+Session.actions(json.load(Pentagon)) ; initiate actions 
+return
+```
 
 # Await
 
