@@ -566,7 +566,9 @@ Element.GetCSS(Name) ; return with CSS
 Element.Shadow() ; return with shadow element detail actually I going to add functionality to access shadow elements in future
 ; first I need to learn about them
 
-Element.Uploadfile(filelocation) ; this not working right I am working on it issue need to find out Payload/request parameters 
+Element.Uploadfile(filelocation) ; this not working right now, I am working on it, I need to find out Payload/request parameters 
+Element.Sendkey(filelocation) ; if Element is input element than file location can be set using sendkey()
+; click on upload button now initiate fileupload, after setting file location 
 ```
 
 ## Shadow Elements
