@@ -111,6 +111,7 @@ Class RunDriver
 		FileDelete, % A_ScriptDir "\chromedriver_win32.zip"
 		return A_ScriptDir "\chromedriver.exe"
 	}
+}
 
 /*
  Rufaydium totally depends on Rest API (HTTP) calls and 
