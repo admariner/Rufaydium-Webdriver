@@ -52,8 +52,23 @@ Class Rufaydium
 			this.capabilities := capabilities.Simple
 		
 		k := this.Send( this.DriverUrl "/session","POST",this.capabilities,1)
+		
 		if k.error
 		{
+			if(k.error = "session not created") and instr(This.Driver.DriverName,"Chrome")
+			{
+				
+				MsgBox, 52,Rufaydium WebDriver Support,% k.message "`n`nPlease Press Yes to download latest driver"
+				IfMsgBox Yes
+				{
+					this.driver.exit()
+					i := this.driver.GetLatest_ChromeDriver(DriverLocation, ErrorMessage)
+					if i
+						Msgbox,64,Rufaydium WebDriver Support,Driver has been updated Please restart script
+				}
+				return
+			}
+			
 			msgbox, 48,Rufaydium WebDriver Support Error,% k.error "`n`n" k.message
 			return k
 		}
