@@ -74,11 +74,12 @@ Class RunDriver
 	
 	; supports for edge and other driver will soon be added 
 	; thanks for AHK_user for driver auto-download suggestion and his code https://www.autohotkey.com/boards/viewtopic.php?f=6&t=102616&start=60#p460812
-	GetLatest_ChromeDriver(DriverLocation=0, Version="")
+	Get_ChromeDriver(Version="")
 	{
-		Process, Close, % GetPIDbyName("chromedriver.exe")
 		if RegExMatch(Version,"Chrome version ([\d.]+).*\n.*browser version is (\d+.\d+.\d+)",bver)
 			Version := "_" bver2
+		else
+			bver1 := "unkown"
 		
 		oHTTP := ComObjCreate("WinHttp.WinHttpRequest.5.1")
 		oHTTP.Open("GET", "https://chromedriver.storage.googleapis.com/LATEST_RELEASE"  Version, true)
@@ -99,18 +100,17 @@ Class RunDriver
 		if !FileExist(A_ScriptDir "\Backup")
 			FileCreateDir, % A_ScriptDir "\Backup"
 		
-		while FileExist(DriverLocation)
-			FileMove, % DriverLocation, % A_ScriptDir "\Backup\Chromedriver Version " bver1 ".exe", 1
-		
 		while FileExist(A_ScriptDir "\chromedriver.exe")
-			FileMove, % A_ScriptDir "\chromedriver.exe", % A_ScriptDir "\Backup\Chromedriver Version unknown.exe", 1
+		{
+			Process, Close, % GetPIDbyName("chromedriver.exe")
+			FileMove, % A_ScriptDir "\chromedriver.exe", % A_ScriptDir "\Backup\Chromedriver Version " bver1 ".exe", 1
+		}
 		
 		FileObj := FolderObj.ParseName("chromedriver.exe")
 		AppObj.Namespace(A_ScriptDir "\").CopyHere(FileObj, 4|16)
 		FileDelete, % A_ScriptDir "\chromedriver_win32.zip"
 		return A_ScriptDir "\chromedriver.exe"
 	}
-}
 
 /*
  Rufaydium totally depends on Rest API (HTTP) calls and 
