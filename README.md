@@ -46,6 +46,13 @@ Driver := new RunDriver(Driverexelocation,Port,Parameters)
 ;Driver2 := new RunDriver(geckodriver.exe,4444) ; we can load multiple different drivers 
 ```
 
+## RunDriver.GetChromeDriver()
+Will let you download latest chrome Driver and return with driver exe location, download supports for latest edge and other driver will soon be added 
+```autohotkey
+msgbox, % RunDriver.GetChromeDriver() ; will donwload latest driver
+msgbox, % RunDriver.GetChromeDriver("101.0.4951") ; download Version 101.0.4951
+```
+## RunDriver.help(Driverexelocation)
 parameters are WebDriver.exe CMD arguments option can vary according to different drivers
 and we can also check these arguments
 
@@ -199,6 +206,9 @@ Chrome.capabilities := Capabilities.ChromeDefault
 ## New Session
 We can skip capabilities, as session will load `Capabilities.simple` as default Capabilities which should work with any browser.  
 We can create session after Setting up capabilities 
+
+Note: Incase of Chrome driver version mismatched with chrome browser rufaydium will ask to update drive and it will update chromedriver automatically script need to reload / restart, this ability will soon be added for other edge and other webdrivers
+
 ```AutoHotkey
 Session := Chrome.NewSession()
 ```
