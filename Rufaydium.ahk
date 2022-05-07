@@ -48,16 +48,16 @@ Class Rufaydium
 	
 	NewSession()
 	{
-		window := []
 		if !this.capabilities
 			this.capabilities := capabilities.Simple
 		
 		k := this.Send( this.DriverUrl "/session","POST",this.capabilities,1)
 		if k.error
 		{
-			msgbox, 48,Rufaydium WebDriver Support Error,% "WebDriver Version does not supports Browser Version `n`n" Json.dump(k)
-			return
+			msgbox, 48,Rufaydium WebDriver Support Error,% k.error "`n`n" k.message
+			return k
 		}
+		window := []
 		window.debuggerAddress := StrReplace(k.capabilities["goog:chromeOptions"].debuggerAddress,"localhost","http://127.0.0.1")
 		window.address := this.DriverUrl "/session/" k.SessionId
 		return new Session(window)
