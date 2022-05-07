@@ -74,7 +74,7 @@ Class RunDriver
 	
 	; supports for edge and other driver will soon be added 
 	; thanks for AHK_user for driver auto-download suggestion and his code https://www.autohotkey.com/boards/viewtopic.php?f=6&t=102616&start=60#p460812
-	Get_ChromeDriver(Version="")
+	GetChromeDriver(Version="")
 	{
 		if RegExMatch(Version,"Chrome version ([\d.]+).*\n.*browser version is (\d+.\d+.\d+)",bver)
 			Version := "_" bver2
