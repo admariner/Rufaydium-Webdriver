@@ -62,7 +62,7 @@ Class Rufaydium
 				IfMsgBox Yes
 				{
 					this.driver.exit()
-					i := this.driver.GetLatest_ChromeDriver(DriverLocation, ErrorMessage)
+					i := this.driver.GetChromeDriver(DriverLocation, ErrorMessage)
 					if i
 						Msgbox,64,Rufaydium WebDriver Support,Driver has been updated Please restart script
 				}
