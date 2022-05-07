@@ -207,7 +207,7 @@ Chrome.capabilities := Capabilities.ChromeDefault
 We can skip capabilities, as session will load `Capabilities.simple` as default Capabilities which should work with any browser.  
 We can create session after Setting up capabilities 
 
-Note: Incase of Chrome driver version mismatched with chrome browser rufaydium will ask to update drive and it will update chromedriver automatically script need to reload / restart, this ability will soon be added for other edge and other webdrivers
+Note: Incase of Chrome driver version mismatched with chrome browser Rufaydium will ask to update driver and it will update chromedriver automatically script need to reload / restart, this ability will soon be added for other edge and other webdrivers
 
 ```AutoHotkey
 Session := Chrome.NewSession()
