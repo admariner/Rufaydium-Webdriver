@@ -102,18 +102,17 @@ Class RunDriver
 		return DownloadnExtract(DriverUrl,zip,exe)
 	}
 	
-	/* not working
+	; not working
 	GetEdgeDrive(Version="edgewebdriver/LATEST_STABLE",bit="32")
 	{
 		exe := "msedgedriver.exe"
 		if RegExMatch(Version,"Chrome version ([\d.]+).*\n.*browser version is (\d+.\d+.\d+)",bver)
 			Version := "_" bver2
-		else if(Version != "STABLE")
-			Version := "RELEASE_" Version
+		; else if(Version != "STABLE")
+		; 	; Version := "RELEASE_" Version
 		else
 			bver1 := "unkown"
 		uri := "https://msedgewebdriverstorage.blob.core.windows.net/" Version
-		msgbox, % Clipboard := uri
 		DriverVersion := Request(uri,"GET")
 		
 		if InStr(DriverVersion, "BlobNotFound"){
@@ -139,7 +138,6 @@ Class RunDriver
 		DriverUrl := "https://msedgedriver.azureedge.net/" DriverVersion "/" zip
 		return DownloadnExtract(DriverUrl,zip,exe)
 	}
-	*/
 }
 
 DownloadnExtract(url,zip,exe)
@@ -161,17 +159,28 @@ DownloadnExtract(url,zip,exe)
  Single function per single process
  */
 global WebRequest := ComObjCreate("WinHttp.WinHttpRequest.5.1")
-Request(url,Method,Payload:= 0,WaitForResponse=0) {
+Request(url,Method,Payload := 0,WaitForResponse := 0) {
 	WebRequest.Open(Method, url, false)
 	WebRequest.SetRequestHeader("Content-Type","application/json")
+	
 	if Payload
 		WebRequest.Send(Payloadfix(Payload))
 	else
 		WebRequest.Send()
 	if WaitForResponse
 		WebRequest.WaitForResponse()
-	return WebRequest.responseText
 	
+	if url ~= "msedge"
+		return SubStr(ConvertResponseBody(WebRequest), 3)
+	else
+		return WebRequest.responseText
+}
+
+ConvertResponseBody(oHTTP){
+	bytes:=oHTTP.Responsebody ;Responsebody has an array of bytes.  Single characters.
+	loop, % oHTTP.GetResponseHeader("Content-Length") ;loop over  responsbody 1 byte at a time
+		text .= chr(bytes[A_Index-1]) ;lookup each byte and assign a charter
+	return text
 }
 
 Payloadfix(p)
