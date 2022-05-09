@@ -100,7 +100,7 @@ Driver.Exit() ; use this when you finished using Rufaydium class
 Driver := new RunDriver(chromeDriver.exe)
 Chrome := new Rufaydium(Driver) ; this will load driver and return control over browser
 ```
-
+No
 # Capabilities Class
 
 Following class can be used to make required capabilities Custom profile for specific need that support concerned WebDriver. 
@@ -232,7 +232,7 @@ Session.NewTab()
 ## Session.Title()
 returns Page title
 ```AutoHotkey
-msgbox, % Session.NewTab()
+msgbox, % Session.Title()
 ```
 
 ## Session.HTML()
