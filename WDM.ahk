@@ -144,7 +144,6 @@ Class RunDriver
 
 DownloadnExtract(url,zip,exe)
 {
-	msgbox, % url
 	URLDownloadToFile, % url ,  % A_ScriptDir "/" zip
 	fso := ComObjCreate("Scripting.FileSystemObject")
 	AppObj := ComObjCreate("Shell.Application")
