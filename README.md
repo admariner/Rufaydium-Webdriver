@@ -51,6 +51,7 @@ Will let you download latest chrome Driver and return with driver exe location, 
 ```autohotkey
 msgbox, % RunDriver.GetChromeDriver() ; will donwload latest driver
 msgbox, % RunDriver.GetChromeDriver("101.0.4951") ; download Version 101.0.4951
+msgbox, % RunDriver.GetChromeDriver("100") ; download latest 100.x.xxxxx driver
 ```
 ## RunDriver.help(Driverexelocation)
 parameters are WebDriver.exe CMD arguments option can vary according to different drivers
