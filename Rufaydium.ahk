@@ -171,7 +171,7 @@ Class Session extends Rufaydium
 	
 	Detail()
 	{
-		return this.Send( this.debuggerAddress "/json","GET")
+		return Json.load(Request(this.debuggerAddress "/json","GET"))
 	}
 	
 	GetTabs()
