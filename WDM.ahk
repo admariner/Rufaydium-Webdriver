@@ -76,41 +76,83 @@ Class RunDriver
 	; thanks for AHK_user for driver auto-download suggestion and his code https://www.autohotkey.com/boards/viewtopic.php?f=6&t=102616&start=60#p460812
 	GetChromeDriver(Version="")
 	{
+		exe := "chromedriver.exe"
+		zip := "chromedriver_win32.zip"
 		if RegExMatch(Version,"Chrome version ([\d.]+).*\n.*browser version is (\d+.\d+.\d+)",bver)
 			Version := "_" bver2
 		else
 			bver1 := "unkown"
-		
-		oHTTP := ComObjCreate("WinHttp.WinHttpRequest.5.1")
-		oHTTP.Open("GET", "https://chromedriver.storage.googleapis.com/LATEST_RELEASE"  Version, true)
-		oHTTP.Send()
-		oHTTP.WaitForResponse()
-		Version_Chromedriver := oHTTP.ResponseText
-		
-		if InStr(Version_Chromedriver, "NoSuchKey"){
-			MsgBox,16,Testing,Error`nVersion_Chromedriver
+		uri := "https://chromedriver.storage.googleapis.com/LATEST_RELEASE"  Version
+		DriverVersion := Request(uri,"GET")
+		if InStr(DriverVersion, "NoSuchKey"){
+			MsgBox,16,Testing,Error`nDriverVersion
 			return false
 		}
 		
-		Url_ChromeDriver := "https://chromedriver.storage.googleapis.com/" Version_Chromedriver "/chromedriver_win32.zip"
-		URLDownloadToFile, %Url_ChromeDriver%,  %A_ScriptDir%/chromedriver_win32.zip
-		fso := ComObjCreate("Scripting.FileSystemObject")
-		AppObj := ComObjCreate("Shell.Application")
-		FolderObj := AppObj.Namespace(A_ScriptDir "\chromedriver_win32.zip")
 		if !FileExist(A_ScriptDir "\Backup")
 			FileCreateDir, % A_ScriptDir "\Backup"
 		
-		while FileExist(A_ScriptDir "\chromedriver.exe")
+		while FileExist(A_ScriptDir "\" exe)
 		{
-			Process, Close, % GetPIDbyName("chromedriver.exe")
-			FileMove, % A_ScriptDir "\chromedriver.exe", % A_ScriptDir "\Backup\Chromedriver Version " bver1 ".exe", 1
+			Process, Close, % GetPIDbyName(exe)
+			FileMove, % A_ScriptDir "\" exe, % A_ScriptDir "\Backup\Chromedriver Version " bver1 ".exe", 1
 		}
 		
-		FileObj := FolderObj.ParseName("chromedriver.exe")
-		AppObj.Namespace(A_ScriptDir "\").CopyHere(FileObj, 4|16)
-		FileDelete, % A_ScriptDir "\chromedriver_win32.zip"
-		return A_ScriptDir "\chromedriver.exe"
+		DriverUrl := "https://chromedriver.storage.googleapis.com/" DriverVersion "/" zip
+		return DownloadnExtract(DriverUrl,zip,exe)
 	}
+	
+	/* not working
+	GetEdgeDrive(Version="edgewebdriver/LATEST_STABLE",bit="32")
+	{
+		exe := "msedgedriver.exe"
+		if RegExMatch(Version,"Chrome version ([\d.]+).*\n.*browser version is (\d+.\d+.\d+)",bver)
+			Version := "_" bver2
+		else if(Version != "STABLE")
+			Version := "RELEASE_" Version
+		else
+			bver1 := "unkown"
+		uri := "https://msedgewebdriverstorage.blob.core.windows.net/" Version
+		msgbox, % Clipboard := uri
+		DriverVersion := Request(uri,"GET")
+		
+		if InStr(DriverVersion, "BlobNotFound"){
+			MsgBox,16,Testing,Error`nDriverVersion
+			return false
+		}
+		; Http header stream octact issue 
+		msgbox, % DriverVersion
+		
+		if instr(bit,"64")
+			zip := "edgedriver_win64.zip"
+		else 
+			zip := "edgedriver_win32.zip"
+		
+		if !FileExist(A_ScriptDir "\Backup")
+			FileCreateDir, % A_ScriptDir "\Backup"
+		
+		while FileExist(A_ScriptDir "\" exe)
+		{
+			Process, Close, % GetPIDbyName(exe)
+			FileMove, % A_ScriptDir "\" exe, % A_ScriptDir "\Backup\Chromedriver Version " bver1 ".exe", 1
+		}
+		DriverUrl := "https://msedgedriver.azureedge.net/" DriverVersion "/" zip
+		return DownloadnExtract(DriverUrl,zip,exe)
+	}
+	*/
+}
+
+DownloadnExtract(url,zip,exe)
+{
+	msgbox, % url
+	URLDownloadToFile, % url ,  % A_ScriptDir "/" zip
+	fso := ComObjCreate("Scripting.FileSystemObject")
+	AppObj := ComObjCreate("Shell.Application")
+	FolderObj := AppObj.Namespace(A_ScriptDir "\" zip)	
+	FileObj := FolderObj.ParseName(exe)
+	AppObj.Namespace(A_ScriptDir "\").CopyHere(FileObj, 4|16)
+	FileDelete, % A_ScriptDir "\" zip
+	return A_ScriptDir "\" exe
 }
 
 /*
@@ -119,7 +161,6 @@ Class RunDriver
  therefore I came up with this trick
  Single function per single process
  */
- 
 global WebRequest := ComObjCreate("WinHttp.WinHttpRequest.5.1")
 Request(url,Method,Payload:= 0,WaitForResponse=0) {
 	WebRequest.Open(Method, url, false)
