@@ -3,7 +3,7 @@
 # Rufaydium
 
 Rufaydium is a WebDriver Library for AutoHotkey to support any Chromium based browser using WebDriver,
-it can downlaod latest driver and update driver acoording to Driver version, 
+it will downlaod latest driver and update driver according to Driver version, 
 this ability is available for Chrome and MS Edge webbrowsers for now
 
 Forum: https://www.autohotkey.com/boards/viewtopic.php?f=6&t=102616
