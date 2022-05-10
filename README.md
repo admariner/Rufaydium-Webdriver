@@ -2,13 +2,11 @@
 
 # Rufaydium
 
-Rufaydium is a WebDriver Library for AutoHotkey to support any Chromium based browser using WebDriver
+Rufaydium is a WebDriver Library for AutoHotkey to support any Chromium based browser using WebDriver,
+it will downlaod latest driver and update driver according to webbrowsers version, 
+this ability is available for Chrome and MS Edge webbrowsers for now
 
 Forum: https://www.autohotkey.com/boards/viewtopic.php?f=6&t=102616
-
-WebDriver: https://chromedriver.chromium.org/downloads  
-(i.e. for Chrome 100 you need to download ChromeDriver 100.0.4896.60)
-
 It utilizes Rest API from W3C https://www.w3.org/TR/webdriver2/
 
 Rufaydium also supports Chrome Devtools Protocols, same as [chrome.ahk](https://github.com/G33kDude/Chrome.ahk)
@@ -21,39 +19,40 @@ No need to install / setup selenium, Rufaydium is AHK's Selenium and is more fle
 
 ```AutoHotkey
 #Include Rufaydium.ahk
-; Just need WebDriver Executable location 
-ChromeDriver := A_ScriptDir "\chromedriver.exe"
-; choose different driver in order to automate different Browser
-Driver := new RunDriver(ChromeDriver) ; running driver
-Chrome := new Rufaydium(Driver) ; this will return control over Browser
+/*
+	Following will load "chromedriver.exe" from "A_ScriptDir"
+	in case driver not available there it will Download "chromedriver.exe" into "A_ScriptDir"  
+	then it will load Driver 
+*/
+Chrome := new Rufaydium("chromedriver.exe")
 
-; choosing Browser Capabilities, by using Capabilities Class you can make custom profile for specific need
-; Chrome.capabilities := Capabilities.ChromeDefault 
 
-; this is how we create session 
-Page := Chrome.NewSession()
-Page.Navigate("https://www.google.com/")
-Page := ""
+f1::
+/*
+	following line will create new session 
+	incase of webbrowser Version Matches with Webdriver Version 
+	it wiwebbrowser ask using Msgbox if press Yes it download webdrive version that matches with webbrowser Version
+*/
+Page := Chrome.NewSession("chromedriver.exe")
+; navigate to url
+Page.Navigate("https://www.autohotkey.com/")
+return
+
+f12::
+Chrome.QuitAllSessions() ; close all session 
+Chrome.Driver.Exit() ; then exits driver
 return
 ```
-
-# RunDriver
-
-Rundriver launches driver in background where port 9515 set to default 
+# New Rufaydium(DriverName,Parameters)
+Rundriver Class intigrated into Rufaydium.ahk that launches driver in background where port 9515 set to default, 
 
 ```AutoHotkey
-Driver := new RunDriver(Driverexelocation,Port,Parameters)
-;Driver2 := new RunDriver(geckodriver.exe,4444) ; we can load multiple different drivers 
+Chrome := new Rufaydium() ; will Download/Load Chrome driver as "chromedriver.exe" is default DriverName
+MSEdge := new Rufaydium("msedgedriver.exe","--port=9516") ; will Download/Load MS Edge driver comunication port will be 9516
 ```
+Note: Driver will be download into A_ScriptDir and old driver will be move to A_ScriptDir "\Backup"
 
-## RunDriver.GetChromeDriver()
-Will let you download latest chrome Driver and return with driver exe location, download supports for latest edge and other driver will soon be added 
-```autohotkey
-msgbox, % RunDriver.GetChromeDriver() ; will donwload latest driver
-msgbox, % RunDriver.GetChromeDriver("101.0.4951") ; download Version 101.0.4951
-msgbox, % RunDriver.GetChromeDriver("100") ; download latest 100.x.xxxxx driver
-```
-## RunDriver.help(Driverexelocation)
+## Driver Parameters
 parameters are WebDriver.exe CMD arguments option can vary according to different drivers
 and we can also check these arguments
 
@@ -82,26 +81,20 @@ Options
 ```
 Driver Hide unhide Driver CMD window
 ```AutoHotKey
-Driver.visible := true ; will unhide
-Driver.visible := false ; will hide
+Chrome := new Rufaydium()
+Chrome.Driver.visible := true ; will unhide
+Chrome.Driver.visible := false ; will hide
 ```
 ## Script reloading
 
-We can reload script as many time as we want but driver will be active in process so we can have control over all the session created through WebDriver so far and we can also Close Driver process this will cause issue that we can no longer access any session created through WebDriver. its better to `Session.exit()` then `Driver.Exit()`
+We can reload script as many time as we want but driver will be active in process so we can have control over all the session created through WebDriver so far and we can also Close Driver process this will cause issue that we can no longer access any session created through WebDriver. its better to `Session.exit()` then `Chrome.Driver.Exit()`
 
 ```AutoHotkey
-ChromeDriver := A_ScriptDir "\chromedriver.exe"
-Driver := new RunDriver(ChromeDriver)
-Driver.Exit() ; use this when you finished using Rufaydium class
+Chrome := new Rufaydium("chromedriver.exe")
+; use this to close driver (after quiting all session) when you finished using Rufaydium class
+Chrome.Driver.Exit() 
 ```
 
-## Loading driver into Rufaydium
-
-```AutoHotkey
-Driver := new RunDriver(chromeDriver.exe)
-Chrome := new Rufaydium(Driver) ; this will load driver and return control over browser
-```
-No
 # Capabilities Class
 
 Following class can be used to make required capabilities Custom profile for specific need that support concerned WebDriver. 
@@ -208,9 +201,10 @@ Chrome.capabilities := Capabilities.ChromeDefault
 We can skip capabilities, as session will load `Capabilities.simple` as default Capabilities which should work with any browser.  
 We can create session after Setting up capabilities 
 
-Note: Incase of Chrome driver version mismatched with chrome browser Rufaydium will ask to update driver and it will update chromedriver automatically script need to reload / restart, this ability will soon be added for other edge and other webdrivers
+Note: Incase of webdriver version mismatched with browser version Rufaydium will ask to update driver and it will update webdriver automatically and load new driver and create session, this ability supported for Chome and MS Edge Webbrowser for now
 
 ```AutoHotkey
+Chrome := new Rufaydium("chromedriver.exe")
 Session := Chrome.NewSession()
 ```
 We can also access previously created session with title or URL, 
@@ -230,21 +224,22 @@ Creates and switch to new tab
 Session.NewTab()
 ```
 
-## Session.Title()
+## Session.Title
 returns Page title
 ```AutoHotkey
-msgbox, % Session.Title()
+msgbox, % Session.Title
 ```
 
-## Session.HTML()
+## Session.HTML
 returns Page HTML
 ```AutoHotkey
-msgbox, % Session.HTML()
+msgbox, % Session.HTML
 ```
-## Session.url()
+## Session.url
 return Page URL
 ```AutoHotkey
-msgbox, % Session.url()
+msgbox, % Session.url
+Session.url := "https://www.autohotkey.com/boards/posting.php?mode=edit&f=6&p=456008"
 ```
 
 ## Session.Refresh()
@@ -254,7 +249,7 @@ Session.Refresh()
 msgbox, Page refresh complete
 ```
 
-## Session.IsLoading()
+## Session.IsLoading
 Tells page is ready or not by Returning with true fales status, this will be helpful for chrome 
 note: this function is not w3c standred will worl only with Chromedriver
 ```AutoHotkey
@@ -313,9 +308,7 @@ Session.Maximize()
 Difference between Session.Close() and Session.Exit()
 
 ```AutoHotkey
-ChromeDriver := A_ScriptDir "\chromedriver.exe"
-Driver := new RunDriver(ChromeDriver)
-Chrome := new Rufaydium(Driver)
+Chrome := new Rufaydium()
 Page1 := Chrome.NewSession()
 Page1.Navigate("https://www.google.com/")
 Page1.NewTab() 	; create new window / tab but Page1 session pointer will remain same 
@@ -586,9 +579,8 @@ Element.Sendkey(StrReplace(filelocation,"\","/")) ; if Element is input element 
 Shadow elements can easily be accessed using `element.shadow()`
 Following example will navigates to Chrome extensions page and enables Developer mode
 ```autohotkey
-Driver := new RunDriver(chromedriver.exe)
-Driver.visible := true
-Chrome := new Rufaydium(Driver)
+Chrome := new Rufaydium()
+Chrome.Driver.visible := true
 Chrome.capabilities := Capabilities.Abeerium
 Page := Chrome.getSessionByUrl("chrome://extensions")
 page.QuerySelector("extensions-manager").shadow().QuerySelector("extensions-toolbar").shadow().getelementbyid("devMode").click()

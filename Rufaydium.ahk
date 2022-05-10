@@ -1,4 +1,4 @@
-; Rufaydium V1.41
+; Rufaydium V1.5
 ; Rufaydium is Webdriver Library can support any chromium based browser 
 ; It only requires Latest WebDriver, 
 ; i.e. for Chrome 100 you need to download ChromeDriver 100.0.4896.60
@@ -18,15 +18,29 @@
 
 Class Rufaydium
 {
-	__new(Driver)
+	__new(DriverName:="chromedriver.exe",Parameters:="--port=9515")
 	{
-		This.Driver := Driver
-		This.DriverUrl := "http://127.0.0.1:" Driver.Port
+		if !FileExist(DriverName)
+		{
+			switch DriverName
+			{
+				case "chromedriver.exe" : DriverName := RunDriver.GetChromeDriver()
+				case "msedgedriver.exe" : DriverName := RunDriver.GetEdgeDrive()
+			}
+			if !FileExist(DriverName)
+			{
+				Msgbox,64,Rufaydium WebDriver Support,Unable to download driver`nRufaydium exitting
+				Exitapp
+			}
+		}
+		This.Driver := new RunDriver(DriverName,Parameters)
+		This.DriverUrl := "http://127.0.0.1:" This.Driver.Port
 	}
 	
 	__Delete()
 	{
-		;This.Driver.Exit()
+		;this.QuitAllSessions()
+		;this.Driver.Exit()
 	}
 	
 	send(url,Method,Payload:= 0,WaitForResponse:=1)
@@ -55,18 +69,26 @@ Class Rufaydium
 		
 		if k.error
 		{
-			if(k.error = "session not created") and instr(This.Driver.DriverName,"Chrome")
+			if(k.error = "session not created")
 			{
 				
 				MsgBox, 52,Rufaydium WebDriver Support,% k.message "`n`nPlease Press Yes to download latest driver"
 				IfMsgBox Yes
 				{
 					this.driver.exit()
-					i := this.driver.GetChromeDriver(DriverLocation, ErrorMessage)
+					switch This.Driver.Name
+					{
+						case "chromedriver":	i := this.driver.GetChromeDriver(k.message), x := "c"
+						case "msedgedriver":	i := this.driver.GetEdgeDrive(k.message), x := "e"
+					} 
 					if i
+					{
 						Msgbox,64,Rufaydium WebDriver Support,Driver has been updated Please restart script
+						
+					}
 				}
-				return
+				This.Driver := new RunDriver(i)
+				return This.NewSession()
 			}
 			
 			msgbox, 48,Rufaydium WebDriver Support Error,% k.error "`n`n" k.message
@@ -94,7 +116,7 @@ Class Rufaydium
 		return windows
 	}
 	
-	getSession(i=0,t=0)
+	getSession(i:=0,t:=0)
 	{
 		if i
 		{
@@ -185,12 +207,15 @@ Class Session extends Rufaydium
 		this.Send("window","POST",{"handle":Tabid})
 	}
 	
-	Title()
+	Title
 	{
-		return this.Send("title","GET")
+		get
+		{
+			return this.Send("title","GET")
+		}
 	}
 	
-	SwitchTab(i=0)	
+	SwitchTab(i:=0)	
 	{
 		if i
 		{
@@ -198,7 +223,7 @@ Class Session extends Rufaydium
 		}
 	}
 	
-	SwitchbyTitle(Title="")
+	SwitchbyTitle(Title:="")
 	{
 		handles := this.GetTabs()
 		for k , handle in handles
@@ -213,7 +238,7 @@ Class Session extends Rufaydium
 		this.Switch(This.currentTab )
 	}
 	
-	SwitchbyURL(url="")
+	SwitchbyURL(url:="")
 	{
 		handles := this.GetTabs()
 		for k , handle in handles
@@ -228,9 +253,17 @@ Class Session extends Rufaydium
 		this.Switch(This.currentTab )
 	}
 	
-	url()
+	url
 	{
-		return this.Send("url","GET")
+		get
+		{
+			return this.Send("url","GET")
+		}
+		
+		set
+		{
+			return this.Send("url","POST",{"url":value})
+		}
 	}
 	
 	Refresh()
@@ -238,9 +271,12 @@ Class Session extends Rufaydium
 		return this.Send("refresh","POST")
 	}
 	
-	IsLoading()
+	IsLoading
 	{
-		return this.Send("is_loading","GET")
+		get
+		{
+			return this.Send("is_loading","GET")
+		}
 	}
 	
 	timeouts()
@@ -250,7 +286,7 @@ Class Session extends Rufaydium
 	
 	Navigate(url)
 	{
-		return this.Send("url","POST",{"url":url})
+		this.url := url
 	}
 	
 	Forward()
@@ -364,9 +400,12 @@ Class Session extends Rufaydium
 		return this.Send("frame/parent","POST",json.null)
 	}
 	
-	HTML()
+	HTML
 	{
-		return this.Send("source","GET",0,1)
+		get
+		{
+			return this.Send("source","GET",0,1)
+		}
 	}
 	
 	ActiveElement()
@@ -533,7 +572,7 @@ Class Session extends Rufaydium
 		return this.Actions(json.load(PointerClick))
 	}
 	
-	DoubleClick(i=0) ; [button: 0(left) | 1(middle) | 2(right)]
+	DoubleClick(i:=0) ; [button: 0(left) | 1(middle) | 2(right)]
 	{
 		PointerClicks =
 		( LTrim Join
@@ -559,7 +598,7 @@ Class Session extends Rufaydium
 		return this.Actions(json.load(PointerClicks))
 	}
 	
-	MBDown(i=0) ; [button: 0(left) | 1(middle) | 2(right)]
+	MBDown(i:=0) ; [button: 0(left) | 1(middle) | 2(right)]
 	{
 		;return this.Send("buttondown","POST",{"button":i})		PointerClick =
 		PointerDown =
@@ -580,7 +619,7 @@ Class Session extends Rufaydium
 		return this.Actions(json.load(PointerDown))
 	}
 	
-	MBup(i=0) ; [button: 0(left) | 1(middle) | 2(right)]
+	MBup(i:=0) ; [button: 0(left) | 1(middle) | 2(right)]
 	{
 		;return this.Send("buttonup","POST",{"button":i})
 		PointerUP =

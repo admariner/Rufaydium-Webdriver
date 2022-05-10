@@ -4,13 +4,19 @@
 
 Class RunDriver
 {
-	__New(Location,Port=9515,Parameters="")
+	__New(Location,Parameters:= "--port=9515")
 	{
 		SplitPath, Location,Name,,,DriverName
-		Parameters := "--port=" Port . " " Parameters
 		This.Target := Location " " chr(34) Parameters chr(34)
-		this.DriverName := DriverName
-		This.Port := Port
+		this.Name := DriverName
+		if RegExMatch(Parameters,"--port=(\d+)",port)
+			This.Port := Port1
+		else
+		{
+			Msgbox,64,Rufaydium WebDriver Support,Unable to download driver`nRufaydium exitting
+			exitapp
+		}
+		
 		PID := GetPIDbyName(Name)
 		if PID
 		{
@@ -102,25 +108,24 @@ Class RunDriver
 		return DownloadnExtract(DriverUrl,zip,exe)
 	}
 	
-	; not working
-	GetEdgeDrive(Version="edgewebdriver/LATEST_STABLE",bit="32")
+	; Thanks RaptorX fixing Issues GetEdgeDrive
+	GetEdgeDrive(Version="STABLE",bit="32")
 	{
 		exe := "msedgedriver.exe"
-		if RegExMatch(Version,"Chrome version ([\d.]+).*\n.*browser version is (\d+.\d+.\d+)",bver)
-			Version := "_" bver2
-		; else if(Version != "STABLE")
-		; 	; Version := "RELEASE_" Version
+		if RegExMatch(Version,"version ([\d.]+).*\n.*browser version is (\d+)",bver)
+			Version := "RELEASE_" bver2
+		else if(Version != "STABLE")
+		 	Version := "RELEASE_" Version
 		else
 			bver1 := "unkown"
-		uri := "https://msedgewebdriverstorage.blob.core.windows.net/" Version
+		uri := "https://msedgedriver.azureedge.net/LATEST_" Version
 		DriverVersion := Request(uri,"GET")
 		
-		if InStr(DriverVersion, "BlobNotFound"){
+		if InStr(DriverVersion, "BlobNotFound") or InStr(DriverVersion, "error")
+		{
 			MsgBox,16,Testing,Error`nDriverVersion
 			return false
 		}
-		; Http header stream octact issue 
-		msgbox, % DriverVersion
 		
 		if instr(bit,"64")
 			zip := "edgedriver_win64.zip"

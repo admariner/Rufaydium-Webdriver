@@ -1,5 +1,5 @@
 ; CDP.ahk provides access to Devtools over WebDriver that support Chrome DevTools
-; CDP.Ahk is exactly Chrome DOM.ahk >> https://www.autohotkey.com/boards/viewtopic.php?t=94276&p=418181 
+; CDP.ahk is exactly Chrome DOM.ahk >> https://www.autohotkey.com/boards/viewtopic.php?t=94276&p=418181 
 ; by Xeo786
 
 
