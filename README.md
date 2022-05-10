@@ -91,7 +91,8 @@ We can reload script as many time as we want but driver will be active in proces
 
 ```AutoHotkey
 Chrome := new Rufaydium("chromedriver.exe")
-Chrome.Driver.Exit() ; use this when you finished using Rufaydium class
+; use this to close driver (after quiting all session) when you finished using Rufaydium class
+Chrome.Driver.Exit() 
 ```
 
 # Capabilities Class
@@ -234,7 +235,7 @@ returns Page HTML
 ```AutoHotkey
 msgbox, % Session.HTML
 ```
-## Session.url()
+## Session.url
 return Page URL
 ```AutoHotkey
 msgbox, % Session.url
