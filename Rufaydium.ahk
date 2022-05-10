@@ -271,9 +271,12 @@ Class Session extends Rufaydium
 		return this.Send("refresh","POST")
 	}
 	
-	IsLoading()
+	IsLoading
 	{
-		return this.Send("is_loading","GET")
+		get
+		{
+			return this.Send("is_loading","GET")
+		}
 	}
 	
 	timeouts()
@@ -283,7 +286,7 @@ Class Session extends Rufaydium
 	
 	Navigate(url)
 	{
-		return this.Send("url","POST",{"url":url})
+		this.url := url
 	}
 	
 	Forward()
@@ -397,9 +400,12 @@ Class Session extends Rufaydium
 		return this.Send("frame/parent","POST",json.null)
 	}
 	
-	HTML()
+	HTML
 	{
-		return this.Send("source","GET",0,1)
+		get
+		{
+			return this.Send("source","GET",0,1)
+		}
 	}
 	
 	ActiveElement()
