@@ -108,6 +108,7 @@ Class RunDriver
 		return DownloadnExtract(DriverUrl,zip,exe)
 	}
 	
+	; Thanks RaptorX fixing Issues GetEdgeDrive
 	GetEdgeDrive(Version="STABLE",bit="32")
 	{
 		exe := "msedgedriver.exe"
