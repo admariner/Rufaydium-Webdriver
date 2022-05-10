@@ -223,21 +223,22 @@ Creates and switch to new tab
 Session.NewTab()
 ```
 
-## Session.Title()
+## Session.Title
 returns Page title
 ```AutoHotkey
-msgbox, % Session.Title()
+msgbox, % Session.Title
 ```
 
-## Session.HTML()
+## Session.HTML
 returns Page HTML
 ```AutoHotkey
-msgbox, % Session.HTML()
+msgbox, % Session.HTML
 ```
 ## Session.url()
 return Page URL
 ```AutoHotkey
-msgbox, % Session.url()
+msgbox, % Session.url
+Session.url := "https://www.autohotkey.com/boards/posting.php?mode=edit&f=6&p=456008"
 ```
 
 ## Session.Refresh()
@@ -247,7 +248,7 @@ Session.Refresh()
 msgbox, Page refresh complete
 ```
 
-## Session.IsLoading()
+## Session.IsLoading
 Tells page is ready or not by Returning with true fales status, this will be helpful for chrome 
 note: this function is not w3c standred will worl only with Chromedriver
 ```AutoHotkey
